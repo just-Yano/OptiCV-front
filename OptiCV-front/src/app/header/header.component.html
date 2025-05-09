@@ -23,9 +23,9 @@
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 flex space-x-4 w-full">
-            <li class="flex"><a (click)="this.router.navigate(['./home']);">Accueil</a></li>
-            <li class="flex"><a (click)="this.router.navigate(['./creation']);">Creation</a></li>
-            <li class="flex"><a (click)="this.router.navigate(['./evaluation']);">Evaluation</a></li>
+            <li class="flex"><a (click)="navigateToHome()">Accueil</a></li>
+            <li class="flex"><a (click)="navigateToCreation()">Creation</a></li>
+            <li class="flex"><a (click)="navigateToEvaluation()">Evaluation</a></li>
         </ul>
     </div>
     <div class="dropdown dropdown-bottom navbar-end">

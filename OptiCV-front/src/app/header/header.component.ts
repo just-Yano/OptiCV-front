@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { NavigationService } from '../navigation.service';  
 @Component({
   selector: 'app-header',
   imports: [],
@@ -8,13 +7,17 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  constructor(private navigationService: NavigationService) { }
+  
+  navigateToHome() {
+    this.navigationService.navigateToHome();
+  }
 
-  constructor(private router : Router) {
-    router = router;
-   }
+  navigateToCreation() {
+    this.navigationService.navigateToCreation();
+  }
 
-  navigateTo(route: string) {
-    // Use the router to navigate to the specified route
-    this.router.navigate([route]);
+  navigateToEvaluation() {
+    this.navigationService.navigateToEvaluation();
   }
 }
