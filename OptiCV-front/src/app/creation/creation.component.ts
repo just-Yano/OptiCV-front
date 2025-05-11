@@ -31,4 +31,38 @@ export class CreationComponent {
 
   }
 
+  generate() {
+    const latexCode = `\\documentclass{article}
+  \\begin{document}
+  Hello from LaTeX!
+  \\end{document}`;  // You can dynamically build this from user inputs if needed
+  
+    const outputPath = "C:/Users/Public"; // Or use a user-chosen path
+  
+    const params = new URLSearchParams({
+      latexCode,
+      outputPath
+    });
+  
+    fetch(`http://localhost:8080/api/cvtemplate/download?${params.toString()}`, {
+      method: 'POST'
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("PDF generation failed");
+      return response.blob();
+    })
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "generated_cv.pdf";
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+      console.error("Error generating PDF:", error);
+    });
+  }
+  
+
 }
