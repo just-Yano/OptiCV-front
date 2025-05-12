@@ -37,11 +37,9 @@ export class CreationComponent {
   Hello from LaTeX!
   \\end{document}`;  // You can dynamically build this from user inputs if needed
   
-    const outputPath = "C:/Users/Public"; // Or use a user-chosen path
   
     const params = new URLSearchParams({
-      latexCode,
-      outputPath
+      latexCode
     });
   
     fetch(`http://localhost:8080/api/cvtemplate/download?${params.toString()}`, {
@@ -55,7 +53,7 @@ export class CreationComponent {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = "generated_cv.pdf";
+      a.download = "Resume_OptiCV.pdf";
       a.click();
       window.URL.revokeObjectURL(url);
     })
