@@ -1,13 +1,14 @@
 <app-header></app-header>
-<iframe src="RSI.pdf" class="h-dvh w-1/2 inline"></iframe> <!-- TODO change the src -->
 
+<div class="flex h-dvh pt-10">
+  <!-- Left: iframe -->
+  <iframe src="RSI.pdf" class="w-1/2 h-full pl-10"></iframe> <!-- TODO change the src -->
 
-
-
-
-<button (click)="generate()">Generate </button>
-<p>creation works!</p>
-
-<div class="absolute right-0 w-[55%] pl-5">
-  <app-add-section></app-add-section>
+  <!-- Right: app-add-section -->
+  <div class="w-1/2 pl-24">
+    <app-add-section></app-add-section>
+  </div>
 </div>
+<!-- 
+<button (click)="generate()">Generate </button>
+<p>creation works!</p> -->
