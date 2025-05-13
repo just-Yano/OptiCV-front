@@ -1,10 +1,18 @@
-<app-header />
+<app-header></app-header>
 
 <div *ngIf="!templateChosen">
     <app-template-selector (messageEvent)="receiveTemplate($event)" />
 </div>
 
-<div *ngIf="templateChosen">
-    <iframe src="RSI.pdf" class="h-dvh w-1/2 inline"></iframe> <!-- TODO change the src -->
-    <button (click)="generate()">Generate </button>
+<div class="flex h-dvh pt-10" *ngIf="templateChosen">
+    <!-- Left: iframe -->
+    <iframe src="RSI.pdf" class="w-1/2 h-full pl-10"></iframe> <!-- TODO change the src -->
+
+    <!-- Right: app-add-section -->
+    <div class="w-1/2 pl-24">
+        <app-add-section></app-add-section>
+    </div>
 </div>
+<!-- 
+<button (click)="generate()">Generate </button>
+<p>creation works!</p> -->

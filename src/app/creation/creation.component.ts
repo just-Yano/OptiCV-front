@@ -3,10 +3,11 @@ import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { Template } from '../../interfaces/template';
 import { TemplateSelectorComponent } from '../template-selector/template-selector.component';
+import { AddSectionComponent } from '../add-section/add-section.component';
 
 @Component({
   selector: 'app-creation',
-  imports: [HeaderComponent, CommonModule, TemplateSelectorComponent],
+  imports: [HeaderComponent, CommonModule, TemplateSelectorComponent, AddSectionComponent],
   templateUrl: './creation.component.html',
   styleUrl: './creation.component.css'
 })
