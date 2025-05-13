@@ -1,14 +1,29 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
+import { CommonModule } from '@angular/common';
+import { Template } from '../../interfaces/template';
+import { TemplateSelectorComponent } from '../template-selector/template-selector.component';
 import { AddSectionComponent } from '../add-section/add-section.component';
 
 @Component({
   selector: 'app-creation',
-  imports: [HeaderComponent, AddSectionComponent],
+  imports: [HeaderComponent, CommonModule, TemplateSelectorComponent, AddSectionComponent],
   templateUrl: './creation.component.html',
   styleUrl: './creation.component.css'
 })
 export class CreationComponent {
+  templateChosen: boolean = false;
+  template: Template = { 
+    id: -1,
+    name: '',
+    description: '',
+    thumbnail: ''
+  };  
+
+  receiveTemplate(template: Template) {
+    this.templateChosen = true;
+    this.template = template;
+  }
 
   generate() {
     const latexCode = `%-------------------------
@@ -289,7 +304,6 @@ export class CreationComponent {
     })
     .catch(error => console.error('Error:', error));
 }
-
 
 
 }
