@@ -1,0 +1,21 @@
+<div *ngIf="score; else noScore">
+    <h3>Score Overview</h3>
+
+    <div class="score-container">
+        <div class="score-item" *ngFor="let field of scoreFields">
+            <div class="score">
+                <strong>{{ field.label }}:</strong>
+                <p>{{ score[field.scoreKey] }}</p>
+            </div>
+            <div class="comment">
+                <strong>{{ field.label }} Comment:</strong>
+                <p>{{ score[field.commentKey] }}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #noScore>
+    <p>No score data available.</p>
+</ng-template>
