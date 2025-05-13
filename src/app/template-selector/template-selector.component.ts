@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Template } from '../../interfaces/template';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'; 
 
 @Component({
   selector: 'app-template-selector',
@@ -14,6 +15,12 @@ export class TemplateSelectorComponent {
 
   sendTemplate(template: Template) {
     this.messageEvent.emit(template);
+  }
+
+  constructor(private sanitizer: DomSanitizer) {}
+
+  sanitizedSvg(template : Template): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(template.thumbnail);
   }
 
   ngOnInit() { // TODO put back the fetch
