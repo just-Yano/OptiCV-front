@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CV } from '../../interfaces/cv';
 import { Education } from '../../interfaces/education';
 import { Experience } from '../../interfaces/experience';
@@ -17,7 +17,7 @@ import { ContactInfo } from '../../interfaces/contact-info';
   styleUrl: './add-section.component.css'
 })
 export class AddSectionComponent {
-
+  @Input() cvTemplateId: number = -1;
   cv: CV = {
     education: [],
     experience: [],
@@ -102,10 +102,9 @@ export class AddSectionComponent {
 
     this.cv.hardSkills.push(hs);
 
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId)
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId)
 
   }
 
@@ -157,10 +156,9 @@ export class AddSectionComponent {
     };
 
     this.cv.contactInfo = contactInfo;
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addSummary() {
@@ -183,10 +181,9 @@ export class AddSectionComponent {
 
     // API CALL 2 - SEND CV
     this.cv.summary = (document.getElementById('summaryText') as HTMLTextAreaElement).value;
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addEducation() {
@@ -232,10 +229,9 @@ export class AddSectionComponent {
     };
 
     this.cv.education.push(education);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addExperience() {
@@ -279,10 +275,9 @@ export class AddSectionComponent {
     };
 
     this.cv.experience.push(experience);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addCertification() {
@@ -318,10 +313,9 @@ export class AddSectionComponent {
       id: 0,
     };
     this.cv.certifications.push(certification);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addProject() {
@@ -361,10 +355,9 @@ export class AddSectionComponent {
       id: 0,
     };
     this.cv.projects.push(project);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addSoftSkill() {
@@ -395,10 +388,9 @@ export class AddSectionComponent {
       logo: null,
     };
     this.cv.softSkills.push(softSkill);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addLanguage() {
@@ -428,10 +420,9 @@ export class AddSectionComponent {
       id: null,
     };
     this.cv.languages.push(language);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
   addInterest() {
@@ -458,10 +449,9 @@ export class AddSectionComponent {
       id: 0,
     };
     this.cv.interests.push(interest);
-    const cvTemplateId = 0; // TODO - get the actual CV template ID
     const userId = 0;
 
-    this.sendCvToBackend(this.cv, cvTemplateId, userId);
+    this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
 
 }
