@@ -43,6 +43,7 @@ export class AddSectionComponent {
   id: 0,
   };
 
+  /*
   // Called in each method to send the CV to the backend
   sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
   fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${userId}&cvTemplateId=${cvTemplateId}`, {
@@ -70,6 +71,33 @@ export class AddSectionComponent {
       console.error('Error:', error);
     });
   }
+    */
+
+  sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
+  fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${userId}&cvTemplateId=${cvTemplateId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(this.cv),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch PDF');
+      }
+      return response.blob();
+    })
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const iframe = document.querySelector('iframe'); // Select the iframe element
+      if (iframe) {
+        iframe.src = url; // Set the blob URL as the iframe's src
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
 
   addHardSkill() {
     // API CALL 1 - ADD SECTION
