@@ -1,6 +1,6 @@
 <div *ngFor="let template of templates; trackBy: trackById" [attr.data-id]='template.id'
     (click)="sendTemplate(template)">
-    <div [innerHTML]="sanitizedSvg(template)" aria-label="{{ template.name }}"></div>
+    <div [innerHTML]="template.safeThumbnail"></div>
     <h3>{{ template.name }}</h3>
     <div
         class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-black text-white px-3 py-1 text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">

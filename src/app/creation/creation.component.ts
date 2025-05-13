@@ -17,7 +17,8 @@ export class CreationComponent {
     id: -1,
     name: '',
     description: '',
-    thumbnail: ''
+    thumbnail: '',
+    safeThumbnail: ''
   };  
 
   receiveTemplate(template: Template) {
