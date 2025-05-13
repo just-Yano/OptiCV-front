@@ -1,4 +1,14 @@
 import { Component } from '@angular/core';
+import { CV } from '../../interfaces/cv';
+import { Education } from '../../interfaces/education';
+import { Experience } from '../../interfaces/experience';
+import { Certification } from '../../interfaces/certification';
+import { HardSkill } from '../../interfaces/hard-skill';
+import { SoftSkill } from '../../interfaces/soft-skill';
+import { Language } from '../../interfaces/language';
+import { Project } from '../../interfaces/project';
+import { Interest } from '../../interfaces/interest';
+import { ContactInfo } from '../../interfaces/contact-info';
 
 @Component({
   selector: 'app-add-section',
@@ -8,28 +18,99 @@ import { Component } from '@angular/core';
 })
 export class AddSectionComponent {
 
-  addHardSkill() {
-    const skillName = (document.getElementById('hardSkillName') as HTMLInputElement).value;
-    const skillLevel = (document.getElementById('hardSkillLevel') as HTMLInputElement).value;
+  cv: CV = {
+    education: [],
+    experience: [],
+    certifications: [],
+    hardSkills: [],
+    softSkills: [],
+    languages: [],
+    projects: [],
+    interests: [],
+    summary: '',
+    contactInfo: {
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      linkedIn: '',
+      github: '',
+      website: '',
+      photo: '',
+      description: '',
+      id: 0,	
+    },
+  id: 0,
+  };
 
-    const params = new URLSearchParams({
-      hardSkillName: skillName,
-      level: skillLevel
-    });
-
-    fetch(`http://localhost:8080/api/hard-skills/add?${params.toString()}`, {
-      method: 'POST'
+  // Called in each method to send the CV to the backend
+  sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
+  fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${userId}&cvTemplateId=${cvTemplateId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(this.cv),
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Skill added:', data);
+    .then(response => {
+      if (!response.ok) {
+          throw new Error('Failed to download PDF');
+      }
+      return response.blob();
+      })
+      .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = "refresh.pdf";
+          a.click();
+          window.URL.revokeObjectURL(url);
     })
     .catch(error => {
       console.error('Error:', error);
     });
   }
 
+  addHardSkill() {
+    // API CALL 1 - ADD SECTION
+    const skillName = (document.getElementById('hardSkillName') as HTMLInputElement).value;
+    const skillLevel = (document.getElementById('hardSkillLevel') as HTMLInputElement).value;
+
+    const params = new URLSearchParams({
+    hardSkillName: skillName,
+    level: skillLevel
+    }); 
+
+    fetch(`http://localhost:8080/api/hard-skills/add?${params.toString()}`, {
+        method: 'POST'
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Skill added:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+    // API CALL 2 - SEND CV
+    const hs: HardSkill = {
+      name: (document.getElementById('hardSkillName') as HTMLInputElement).value,
+      level: parseInt((document.getElementById('hardSkillLevel') as HTMLInputElement).value),
+      logo: null,
+      id: null,
+    };
+
+    this.cv.hardSkills.push(hs);
+
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId)
+
+  }
+
   addContactInfo() {
+    // API CALL 1 - ADD SECTION
     const name = (document.getElementById('contactName') as HTMLInputElement).value;
     const email = (document.getElementById('contactEmail') as HTMLInputElement).value;
     const phone = (document.getElementById('contactPhone') as HTMLInputElement).value;
@@ -60,6 +141,26 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const contactInfo: ContactInfo = {
+      name: (document.getElementById('contactName') as HTMLInputElement).value,
+      email: (document.getElementById('contactEmail') as HTMLInputElement).value,
+      phone: (document.getElementById('contactPhone') as HTMLInputElement).value,
+      address: (document.getElementById('contactAddress') as HTMLInputElement).value,
+      linkedIn: (document.getElementById('contactLinkedIn') as HTMLInputElement).value,
+      github: (document.getElementById('contactGitHub') as HTMLInputElement).value,
+      website: (document.getElementById('contactWebsite') as HTMLInputElement).value,
+      photo: (document.getElementById('contactPhoto') as HTMLInputElement).value,
+      description: (document.getElementById('contactDescription') as HTMLTextAreaElement).value,
+      id: 0,
+    };
+
+    this.cv.contactInfo = contactInfo;
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addSummary() {
@@ -79,6 +180,13 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    this.cv.summary = (document.getElementById('summaryText') as HTMLTextAreaElement).value;
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addEducation() {
@@ -110,6 +218,24 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const education: Education = {
+      degree: (document.getElementById('educationTitle') as HTMLInputElement).value,
+      school: (document.getElementById('educationSchool') as HTMLInputElement).value,
+      startDate: (document.getElementById('educationStartDate') as HTMLInputElement).value,
+      endDate: (document.getElementById('educationEndDate') as HTMLInputElement).value,
+      location: (document.getElementById('educationLocation') as HTMLInputElement).value,
+      description: (document.getElementById('educationDescription') as HTMLInputElement).value,
+      logo: (document.getElementById('educationLogo') as HTMLInputElement).value,
+      id: 0,
+    };
+
+    this.cv.education.push(education);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addExperience() {
@@ -139,6 +265,24 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const experience: Experience = {
+      jobTitle: (document.getElementById('experienceTitle') as HTMLInputElement).value,
+      company: (document.getElementById('experienceCompany') as HTMLInputElement).value,
+      startDate: (document.getElementById('experienceStartDate') as HTMLInputElement).value,
+      endDate: (document.getElementById('experienceEndDate') as HTMLInputElement).value,
+      location: (document.getElementById('experienceLocation') as HTMLInputElement).value,
+      description: (document.getElementById('experienceDescription') as HTMLTextAreaElement).value,
+      logo: (document.getElementById('experienceLogo') as HTMLInputElement).value,
+      id: 0,
+    };
+
+    this.cv.experience.push(experience);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addCertification() {
@@ -164,6 +308,20 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const certification: Certification = {
+      certificationName: (document.getElementById('certificationName') as HTMLInputElement).value,
+      institution: (document.getElementById('certificationInstitution') as HTMLInputElement).value,
+      dateObtained: (document.getElementById('certificationDateObtained') as HTMLInputElement).value,
+      expirationDate: (document.getElementById('certificationExpirationDate') as HTMLInputElement).value,
+      id: 0,
+    };
+    this.cv.certifications.push(certification);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addProject() {
@@ -191,6 +349,22 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const project: Project = {
+      title: (document.getElementById('projectTitle') as HTMLInputElement).value,
+      description: (document.getElementById('projectDescription') as HTMLTextAreaElement).value,
+      link: (document.getElementById('projectLink') as HTMLInputElement).value,
+      startDate: (document.getElementById('projectStartDate') as HTMLInputElement).value,
+      endDate: (document.getElementById('projectEndDate') as HTMLInputElement).value,
+      logo: null,
+      id: 0,
+    };
+    this.cv.projects.push(project);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addSoftSkill() {
@@ -212,6 +386,19 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const softSkill: SoftSkill = {
+      name: (document.getElementById('softSkillName') as HTMLInputElement).value,
+      level: parseInt((document.getElementById('softSkillLevel') as HTMLInputElement).value),
+      id: 0,
+      logo: null,
+    };
+    this.cv.softSkills.push(softSkill);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addLanguage() {
@@ -233,6 +420,18 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const language: Language = {
+      name: (document.getElementById('languageName') as HTMLInputElement).value,
+      level: parseInt((document.getElementById('languageLevel') as HTMLInputElement).value),
+      id: null,
+    };
+    this.cv.languages.push(language);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
 
   addInterest() {
@@ -252,5 +451,17 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    // API CALL 2 - SEND CV
+    const interest: Interest = {
+      interest: (document.getElementById('interestName') as HTMLInputElement).value,
+      id: 0,
+    };
+    this.cv.interests.push(interest);
+    const cvTemplateId = 0; // TODO - get the actual CV template ID
+    const userId = 0;
+
+    this.sendCvToBackend(this.cv, cvTemplateId, userId);
   }
+
 }
