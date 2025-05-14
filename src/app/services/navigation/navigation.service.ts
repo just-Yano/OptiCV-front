@@ -28,7 +28,7 @@ export class NavigationService {
     this.router.navigate(['/registration']);
   }
 
-  navigateToPreferences() {
-    this.router.navigate(['/preferences']);
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
   }
 }

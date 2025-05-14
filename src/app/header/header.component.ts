@@ -32,8 +32,8 @@ export class HeaderComponent {
     this.navigationService.navigateToLogin();
   }
 
-  navigateToPreferences() {
-    this.navigationService.navigateToPreferences();
+  navigateToProfile() {
+    this.navigationService.navigateToProfile();
   }
 
   logOut() {

@@ -4,7 +4,7 @@ import { CreationComponent } from './creation/creation.component';
 import { EvaluateComponent } from './evaluate/evaluate.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { RegisterComponent } from './register/register.component';
-import { PreferencesComponent } from './preferences/preferences.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
@@ -13,5 +13,5 @@ export const routes: Routes = [
     { path: 'evaluation', component: EvaluateComponent},
     { path: 'login', component: LogInComponent}, 
     { path: 'registration', component: RegisterComponent}, 
-    { path: 'preferences', component: PreferencesComponent}, 
+    { path: 'profile', component: ProfileComponent}, 
 ];
