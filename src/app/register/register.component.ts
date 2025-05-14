@@ -26,8 +26,12 @@ export class RegisterComponent {
     // double check if the form is valid
     if (registerForm.valid) {
       // get the form data
-      const formData = registerForm.value;
-
+      const {username, email, password} = registerForm.value;
+      const formData = {
+        username: username,
+        email: email,
+        password: password
+      };
       // sending the form data to the server
       fetch('http://localhost:8080/api/auth/register', {
         method: 'POST',
@@ -35,21 +39,28 @@ export class RegisterComponent {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
-      }).then(response => {
-        if (!response.ok) {
-          this.errorMessage = 'Registration failed. Please try again.';
-          setTimeout(() => {
-            this.errorMessage = '';
-          }
-          , 3000);
+      }).then(response => { // TODO receive a bad response if the email is already used
+        if (!response.ok) { 
+          response.json().then(data => {
+            throw new Error(data.responseMessage);
+          })
         }
+        return response.json();
       }).then(data => {
+        sessionStorage.setItem('token', data.token);
         this.successMessage = 'Welcome to OptiCV!';
         registerForm.reset();
         setTimeout(() => {
           this.successMessage = '';
           this.router.navigate(['/home']);
         }, 3000);
+      }).catch(error => {
+        // handle the error
+        this.errorMessage = error.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }
+        , 3000);
       });
     }
   }

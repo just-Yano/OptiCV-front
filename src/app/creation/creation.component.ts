@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Template } from '../../interfaces/template';
 import { TemplateSelectorComponent } from '../template-selector/template-selector.component';
 import { AddSectionComponent } from '../add-section/add-section.component';
+import { AuthService } from '../services/authentication/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-creation',
@@ -13,6 +15,7 @@ import { AddSectionComponent } from '../add-section/add-section.component';
 })
 export class CreationComponent {
   templateChosen: boolean = false;
+  loggedIn: boolean = false;
   template: Template = { 
     id: -1,
     name: '',
@@ -21,6 +24,16 @@ export class CreationComponent {
     safeThumbnail: ''
   };  
 
+  constructor(private authService: AuthService, private router : Router) {}
+
+  ngOnInit() {
+    this.loggedIn = this.authService.isLoggedIn();
+    if (!this.loggedIn) {
+      setTimeout(() => {
+      this.router.navigate(['/login']);}
+      , 5000);
+    }
+  }
   receiveTemplate(template: Template) {
     this.templateChosen = true;
     this.template = template;

@@ -1,17 +1,20 @@
-<app-header></app-header>
+<div *ngIf="loggedIn">
+    <app-header></app-header>
 
-<div *ngIf="!templateChosen">
-    <app-template-selector (messageEvent)="receiveTemplate($event)" />
-</div>
-
-<div class="flex h-dvh pt-10" *ngIf="templateChosen">
-    <!-- Left: iframe -->
-    <iframe src="jakes-resume-anonymous.pdf" class="w-1/2 h-full pl-10"></iframe> <!-- TODO change the src -->
-
-    <!-- Right: app-add-section -->
-    <div class="w-1/2 pl-24">
-        <app-add-section [cvTemplateId]="template.id"></app-add-section>
+    <div *ngIf="!templateChosen">
+        <app-template-selector (messageEvent)="receiveTemplate($event)" />
     </div>
-</div>
 
-<button (click)="generate()">Generate </button>
+    <div class="flex h-dvh pt-10" *ngIf="templateChosen">
+        <!-- Left: iframe -->
+        <iframe src="jakes-resume-anonymous.pdf" class="w-1/2 h-full pl-10"></iframe> <!-- TODO change the src -->
+
+        <!-- Right: app-add-section -->
+        <div class="w-1/2 pl-24">
+            <app-add-section [cvTemplateId]="template.id"></app-add-section>
+        </div>
+    </div>
+
+    <button (click)="generate()">Generate </button>
+</div>
+<div *ngIf="!loggedIn"> You should be logged in to create a CV </div>

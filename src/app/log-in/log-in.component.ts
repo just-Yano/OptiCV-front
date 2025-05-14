@@ -15,44 +15,42 @@ export class LogInComponent {
   constructor(private navigationService: NavigationService) { }
 
   onSubmit(loginForm: NgForm) {
-    // double check if the form is valid
-    if (loginForm.valid) {
-      // get the form data
-      const formData = loginForm.value;
-
-      // sending the form data to the server
-      fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+    // get the form data
+    const formData = loginForm.value;
+    
+    // sending the form data to the server
+    fetch('http://localhost:8080/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
       }).then(response => {
         if (!response.ok) {
-          this.errorMessage = 'Invalid username or password.';
+          throw new Error('Invalid username or password.');
+        }
+        return response.json();
+      }).then(data => {
+        // store the token in session storage
+        sessionStorage.setItem('token', data.token);
+        // reset the form
+        loginForm.reset();
+        // show success message
+        this.successMessage = 'Welcome back! Your are being redirected to the home page.';
+        // navigate to the home page
+        setTimeout(() => {
+          this.navigationService.navigateToHome();
+          this.successMessage = '';
+        }
+        , 3000);
+       }).catch(error => {
+          // handle the error
+          this.errorMessage = error.message;
           setTimeout(() => {
             this.errorMessage = '';
-          }
-          , 3000);
         }
-        }).then(data => { // TODO handle the token
-          this.successMessage = 'Welcome back to OptiCV!';
-          // reset the form
-          loginForm.reset();
-          // navigate to the home page
-          setTimeout(() => {
-            this.successMessage = '';
-            this.navigationService.navigateToHome();
-          }
-          , 3000);
-        }); 
-    } else {
-      this.errorMessage = 'Please use a valid email address and password.';
-      setTimeout(() => {
-        this.errorMessage = '';
-      }
-      , 3000);
-    }
+        , 3000);
+      }); 
   }
 
   navigateToHome() {
