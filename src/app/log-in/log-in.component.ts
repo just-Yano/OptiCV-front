@@ -33,7 +33,7 @@ export class LogInComponent {
         return response.json();
       }).then(data => {
         // store the token in session storage
-        this.auth.login(data.token);
+        this.auth.login(data.token, formData.email); // TODO remove the email and keep the token only
         // reset the form
         loginForm.reset();
         // show success message

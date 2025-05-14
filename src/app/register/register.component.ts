@@ -53,7 +53,7 @@ export class RegisterComponent {
       })
       .then(data => {
         // Handle the success case
-        this.aut.login(data.token);
+        this.aut.login(data.token, formData.email); // TODO remove the email and keep the token only
         this.successMessage = 'Welcome to OptiCV!';
         registerForm.reset();
         setTimeout(() => {
