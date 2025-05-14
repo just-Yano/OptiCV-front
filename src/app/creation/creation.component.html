@@ -1,4 +1,4 @@
-<div *ngIf="loggedIn">
+<div *ngIf="isLoggedIn">
     <app-header></app-header>
 
     <div *ngIf="!templateChosen">
@@ -17,4 +17,4 @@
 
     <button (click)="generate()">Generate </button>
 </div>
-<div *ngIf="!loggedIn"> You should be logged in to create a CV </div>
+<div *ngIf="!isLoggedIn"> You should be logged in to create a CV </div>

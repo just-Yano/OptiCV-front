@@ -1,11 +1,15 @@
-<app-header></app-header>
+<div *ngIf="isLoggedIn">
+    <app-header></app-header>
 
-<fieldset class="fieldset">
-    <legend class="fieldset-legend">Pick a file</legend>
-    <input type="file" #cvInput class="file-input" accept="application/pdf" />
-    <label class="label">Max size 2MB</label>
-</fieldset>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Pick a file</legend>
+        <input type="file" #cvInput class="file-input" accept="application/pdf" />
+        <label class="label">Max size 2MB</label>
+    </fieldset>
 
-<button class="btn" (click)="evaluateCV(cvInput)">Evaluer mon CV</button>
+    <button class="btn" (click)="evaluateCV(cvInput)">Evaluer mon CV</button>
 
-<app-score-section [score]="score"></app-score-section>
+    <app-score-section [score]="score"></app-score-section>
+</div>
+
+<div *ngIf="!isLoggedIn">You should be logged in to evaluate a CV</div>

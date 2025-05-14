@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class CreationComponent {
   templateChosen: boolean = false;
-  loggedIn: boolean = false;
+  public isLoggedIn: boolean = false;
   template: Template = { 
     id: -1,
     name: '',
@@ -24,16 +24,18 @@ export class CreationComponent {
     safeThumbnail: ''
   };  
 
-  constructor(private authService: AuthService, private router : Router) {}
+  constructor(private authService: AuthService, private router : Router) {
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
 
   ngOnInit() {
-    this.loggedIn = this.authService.isLoggedIn();
-    if (!this.loggedIn) {
+    if (!this.isLoggedIn) {
       setTimeout(() => {
       this.router.navigate(['/login']);}
       , 5000);
     }
   }
+  
   receiveTemplate(template: Template) {
     this.templateChosen = true;
     this.template = template;
