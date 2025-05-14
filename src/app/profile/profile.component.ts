@@ -24,13 +24,12 @@ export class ProfileComponent {
       this.router.navigate(['/login']);}
       , 5000);
     }
-
-    // TODO 
-    fetch('https://localhost:8080/api/user/getProfile', {
+    // TODO remove the parameter and use only the token
+    fetch(`https://localhost:8080/api/user/getProfile?email=${this.authService.getEmail()}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.authService.getToken()}`
+        // TODO remove later when using the token'Authorization': `Bearer ${this.authService.getToken()}`
       }
     }).then(response => {
       if (!response.ok) {
@@ -41,9 +40,13 @@ export class ProfileComponent {
         return response.json(); // Read the body once for a successful response
       }).then((data : User) => {
         // binding the data to the profile component HTML
+        loadProfile(data);
       }).catch(error => {
         // TODO redirect to home page + give error message?
         
       });
   } 
+  loadProfile(data: User) {
+    
+  }
 }

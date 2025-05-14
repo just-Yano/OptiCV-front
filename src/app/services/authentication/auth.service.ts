@@ -17,6 +17,11 @@ export class AuthService {
     return sessionStorage.getItem(this.TOKEN_KEY);
   }
 
+  // TODO remove and use only the token
+  getEmail(): string | null {
+    return sessionStorage.getItem(this.EMAIL_KEY);
+  }
+
   login(token: string, email : string): void { // param email
     sessionStorage.setItem(this.TOKEN_KEY, token);
     sessionStorage.setItem(this.EMAIL_KEY, email); // TODO remove and use only the token

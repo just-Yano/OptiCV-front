@@ -1,5 +1,107 @@
 <div *ngIf="isLoggedIn">
     <app-header></app-header>
+    <!-- user-profile.component.html -->
+    <section>
+        <h2>Username</h2>
+        <p>{{ user.username }}</p>
+    </section>
+
+    <section>
+        <h2>Email</h2>
+        <p>{{ user.email }}</p>
+    </section>
+
+    <section>
+        <h2>CVs</h2>
+        <ul>
+            <li *ngFor="let cv of user.cvs">
+                {{ cv.name }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Educations</h2>
+        <ul>
+            <li *ngFor="let edu of user.educations">
+                {{ edu.degree }} at {{ edu.institution }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Experiences</h2>
+        <ul>
+            <li *ngFor="let exp of user.experiences">
+                {{ exp.position }} at {{ exp.company }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hard Skills</h2>
+        <ul>
+            <li *ngFor="let skill of user.hardSkills">
+                {{ skill.name }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Soft Skills</h2>
+        <ul>
+            <li *ngFor="let skill of user.softSkills">
+                {{ skill.name }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+        <ul>
+            <li *ngFor="let project of user.projects">
+                {{ project.title }} - {{ project.description }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Contact Info</h2>
+        <p>Phone: {{ user.contactInfo.phone }}</p>
+        <p>Address: {{ user.contactInfo.address }}</p>
+    </section>
+
+    <section>
+        <h2>Summary</h2>
+        <p>{{ user.summary }}</p>
+    </section>
+
+    <section>
+        <h2>Languages</h2>
+        <ul>
+            <li *ngFor="let lang of user.languages">
+                {{ lang.name }} ({{ lang.level }})
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Certifications</h2>
+        <ul>
+            <li *ngFor="let cert of user.certifications">
+                {{ cert.title }} - {{ cert.issuer }}
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Interests</h2>
+        <ul>
+            <li *ngFor="let i of user.interest">
+                {{ i.name }}
+            </li>
+        </ul>
+    </section>
 
 </div>
 
