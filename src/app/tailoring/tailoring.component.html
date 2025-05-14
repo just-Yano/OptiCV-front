@@ -6,6 +6,7 @@
     <!-- Left: job offer input -->
     <div class="w-1/2">
         <h2 class="text-2xl font-bold mb-6">Job Offer</h2>
+        <p class="text-sm text-gray-500 mb-4">Paste or type the job offer you want to tailor your resume to.</p>
         <textarea
         placeholder="Paste or type your job offer here..."
         class="textarea textarea-bordered w-full h-[60vh] resize-none"
@@ -18,7 +19,8 @@
     <!-- Right: view section -->
     <div class="w-1/2">
         <h2 class="text-2xl font-bold mb-6">View your Sections</h2>
-        <app-view-section></app-view-section>
+        <p class="text-sm text-gray-500 mb-4">Feel free to add or modify your sections </p>
+        <app-view-section [showAddButton]="true"></app-view-section>
     </div>
     </div>
 

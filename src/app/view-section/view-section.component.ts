@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './view-section.component.css'
 })
 export class ViewSectionComponent {
+  @Input() showAddButton: boolean = false;
 
   // Sample data for the view section. TODO fetch from backend
   contact = [
