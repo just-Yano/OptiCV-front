@@ -31,4 +31,8 @@ export class NavigationService {
   navigateToProfile() {
     this.router.navigate(['/profile']);
   }
+  
+  navigateToTailoring() {
+    this.router.navigate(['/tailoring']);
+  }
 }
