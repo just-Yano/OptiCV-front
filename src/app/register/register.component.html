@@ -1,1 +1,50 @@
-<p>register works!</p>
+<a (click)="navigateToLogin()"><img src="back-arrow-icon.svg" alt="back arrow" class="w-5 h-auto"></a>
+<form id="register-form" (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+
+    <!-- Username -->
+    <div>
+        <label for="username">Username</label>
+        <input placeholder='Jake' type="text" id="username" name="username" [(ngModel)]="form.username"
+            #username="ngModel" required />
+        <div *ngIf="username.invalid && username.touched">
+            Username is required.
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div>
+        <label for="email">Email Address</label>
+        <input placeholder='jake@example.com' type="email" id="email" name="email" [(ngModel)]="form.email"
+            #email="ngModel" ngModel required email />
+        <div *ngIf="email.invalid && email.touched">
+            A valid email address is required.
+        </div>
+    </div>
+
+    <!-- Password -->
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="form.password" #password="ngModel" required />
+        <div *ngIf="password.invalid && password.touched">
+            Password is required.
+        </div>
+    </div>
+
+    <!-- Confirm Password -->
+    <div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="form.confirmPassword"
+            #confirmPassword="ngModel" required
+            [ngClass]="{'is-invalid': confirmPassword.invalid && confirmPassword.touched}" />
+        <div *ngIf="confirmPassword.invalid && confirmPassword.touched">
+            Confirming password is required.
+        </div>
+        <div *ngIf="confirmPassword.value !== form.password && confirmPassword.touched" class="text-red-500">
+            Passwords do not match.
+        </div>
+    </div>
+
+    <button class='btn' type="submit" [disabled]="registerForm.invalid">Register</button>
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p *ngIf="successMessage">{{ successMessage }}</p>
+</form>

@@ -12,6 +12,7 @@
     <p>Don't have an account? <a class='link' (click)='navigateToRegistration()'>Register now</a>
     </p>
     <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p *ngIf="successMessage">{{ successMessage }}</p>
 </form>
 
 <!--add forgot password-->

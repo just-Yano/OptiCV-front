@@ -11,7 +11,7 @@ import { NavigationService } from '../navigation.service';
 })
 export class LogInComponent {
   errorMessage: string = '';
-
+  successMessage: string = '';
   constructor(private navigationService: NavigationService) { }
 
   onSubmit(loginForm: NgForm) {
@@ -35,11 +35,16 @@ export class LogInComponent {
           }
           , 3000);
         }
-        }).then(data => {
-          // handle the response data
-          console.log(data); // TODO check for the cookies
+        }).then(data => { // TODO handle the token
+          this.successMessage = 'Welcome back to OptiCV!';
           // reset the form
           loginForm.reset();
+          // navigate to the home page
+          setTimeout(() => {
+            this.successMessage = '';
+            this.navigationService.navigateToHome();
+          }
+          , 3000);
         }); 
     } else {
       this.errorMessage = 'Please use a valid email address and password.';
