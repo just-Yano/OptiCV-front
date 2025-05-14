@@ -43,7 +43,7 @@ export class HeaderComponent {
       this.navigationService.navigateToHome();
     }   
   }
-  
+
   navigateToTailoring() {
     this.navigationService.navigateToTailoring();
   }
