@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NavigationService } from '../navigation.service';
+import { NavigationService } from '../services/navigation/navigation.service';
 import { AuthService } from '../services/authentication/auth.service';
 
 @Component({

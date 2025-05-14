@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ScoreCV } from '../../interface/score-cv';
+import { ScoreCV } from '../../interfaces/score-cv';
 import { CommonModule } from '@angular/common';
 
 @Component({

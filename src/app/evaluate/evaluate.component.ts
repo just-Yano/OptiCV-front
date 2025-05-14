@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
-import { ScoreCV } from '../../interface/score-cv';
+import { ScoreCV } from '../../interfaces/score-cv';
 import { ScoreSectionComponent } from '../score-section/score-section.component';
 import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
