@@ -74,12 +74,14 @@ export class AddSectionComponent {
     */
 
   sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
+  console.log("abel ma neb3at");
+  console.log(cv);
   fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${userId}&cvTemplateId=${cvTemplateId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(this.cv),
+    body: JSON.stringify(cv),
   })
     .then(response => {
       if (!response.ok) {
@@ -304,6 +306,10 @@ export class AddSectionComponent {
 
     this.cv.experience.push(experience);
     const userId = 0;
+
+    console.log("Chouf chou 3am jarrib a3mil la hayda l projet")
+
+    console.log(this.cv.experience);
 
     this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }
