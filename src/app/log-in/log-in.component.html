@@ -1,0 +1,17 @@
+<a (click)="navigateToHome()"><img src="back-arrow-icon.svg" alt="back arrow" class="w-5 h-auto"></a>
+<form id="login-form" (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+    <div>
+        <label for="email">Adresse mail</label>
+        <input type="email" id="email" name="email" ngModel required email />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" ngModel required />
+    </div>
+    <button class='btn' type="submit" [disabled]="!loginForm.valid">Log In</button>
+    <p>Don't have an account? <a class='link' (click)='navigateToRegistration()'>Register now</a>
+    </p>
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+</form>
+
+<!--add forgot password-->

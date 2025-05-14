@@ -19,4 +19,12 @@ export class NavigationService {
   navigateToEvaluation() {
     this.router.navigate(['/evaluation']);
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  navigateToRegistration() {
+    this.router.navigate(['/registration']);
+  }
 }
