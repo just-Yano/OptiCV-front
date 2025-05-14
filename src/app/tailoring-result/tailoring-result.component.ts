@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemplateSelectorComponent } from '../template-selector/template-selector.component';
 import { ViewSectionComponent } from '../view-section/view-section.component';
@@ -11,6 +11,8 @@ import { Template } from '../../interfaces/template';
   styleUrl: './tailoring-result.component.css'
 })
 export class TailoringResultComponent {
+  @Output() templateSelected = new EventEmitter<Template>();
+
  templateChosen: boolean = false;
   template: Template = { 
     id: -1,
@@ -21,7 +23,9 @@ export class TailoringResultComponent {
   };  
 
   receiveTemplate(template: Template) {
+    console.log('Received template:', template);
     this.templateChosen = true;
     this.template = template;
+    this.templateSelected.emit(template); // Emit the selected template
   }
 }
