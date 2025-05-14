@@ -24,30 +24,35 @@ export class RegisterComponent {
   constructor(private navigationService: NavigationService, private router : Router, private aut : AuthService) {}
 
   onSubmit(registerForm: NgForm) {
-    // double check if the form is valid
-    if (registerForm.valid) {
-      // get the form data
-      const {username, email, password} = registerForm.value;
-      const formData = {
-        username: username,
-        email: email,
-        password: password
-      };
-      // sending the form data to the server
-      fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      }).then(response => { // TODO receive a bad response if the email is already used
-        if (!response.ok) { 
-          response.json().then(data => {
-            throw new Error(data.responseMessage);
-          })
+  // double check if the form is valid
+  if (registerForm.valid) {
+    // get the form data
+    const { username, email, password } = registerForm.value;
+    const formData = {
+      username: username,
+      email: email,
+      password: password
+    };
+
+    // sending the form data to the server
+    fetch('http://localhost:8080/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          // Only read the response body once if there's an error
+          return response.json().then(data => {
+            throw new Error(data.responseMessage || 'Registration failed');
+          });
         }
-        return response.json();
-      }).then(data => {
+        return response.json(); // Read the body once for a successful response
+      })
+      .then(data => {
+        // Handle the success case
         this.aut.login(data.token);
         this.successMessage = 'Welcome to OptiCV!';
         registerForm.reset();
@@ -55,16 +60,17 @@ export class RegisterComponent {
           this.successMessage = '';
           this.router.navigate(['/home']);
         }, 3000);
-      }).catch(error => {
-        // handle the error
+      })
+      .catch(error => {
+        // Handle the error
         this.errorMessage = error.message;
         setTimeout(() => {
           this.errorMessage = '';
-        }
-        , 3000);
+        }, 3000);
       });
-    }
   }
+}
+
 
   navigateToLogin() {
     this.navigationService.navigateToLogin();
