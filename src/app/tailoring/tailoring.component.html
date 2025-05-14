@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<div *ngIf="!buttonClicked">
+
+    <div class="flex h-dvh pt-10 px-10 gap-8">
+    <!-- Left: job offer input -->
+    <div class="w-1/2">
+        <h2 class="text-2xl font-bold mb-6">Job Offer</h2>
+        <textarea
+        placeholder="Paste or type your job offer here..."
+        class="textarea textarea-bordered w-full h-[60vh] resize-none"
+        ></textarea>
+        <div class="pt-4">
+            <button class="btn btn-block bg-primary" (click)="viewTemplates()">Start Tailoring</button>
+        </div>
+    </div>
+
+    <!-- Right: view section -->
+    <div class="w-1/2">
+        <h2 class="text-2xl font-bold mb-6">View your Sections</h2>
+        <app-view-section></app-view-section>
+    </div>
+    </div>
+
+</div>
+
+<div *ngIf="buttonClicked">
+    <div class="flex h-dvh pt-10 px-10 gap-8">
+        <div class="w-full">
+            <app-tailoring-result></app-tailoring-result>
+        </div>
+    </div>
+</div>

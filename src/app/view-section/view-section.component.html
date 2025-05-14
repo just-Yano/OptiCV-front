@@ -1,0 +1,1006 @@
+<div class="w-full max-w-2xl mx-auto">
+
+  <!-- Contact Info (static for now) -->
+<div class="card bg-base-100 shadow-md border border-base-300 mb-6">
+  <div class="card-body">
+    <h2 class="card-title">Contact Info</h2>
+    <ng-container *ngFor="let con of contact">
+      <div class="text-sm text-gray-500 space-y-1">
+        <p><strong>Name:</strong> {{ con.name }}</p>
+        <p><strong>Email:</strong> {{ con.email }}</p>
+        <p><strong>Phone:</strong> {{ con.phone }}</p>
+        <p><strong>Address:</strong> {{ con.address }}</p>
+        <p><strong>LinkedIn:</strong> {{ con.linkedIn }}</p>
+        <p><strong>GitHub:</strong> {{ con.github }}</p>
+        <p><strong>Website:</strong> {{ con.website }}</p>
+        <p><strong>Description:</strong> {{ con.description }}</p>
+      </div>
+      <div class="card-actions justify-end mt-4">
+        <button class="btn btn-sm btn-outline" (click)="openModifyContactModal(con)">Modify</button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+  <!-- Summary -->
+<div class="card bg-base-100 shadow-md border border-base-300 mb-6">
+  <div class="card-body">
+    <h2 class="card-title">Summary</h2>
+    <ng-container *ngFor="let sum of summary">
+      <p class="text-sm text-gray-500">{{ sum.summary }}</p>
+      <div class="card-actions justify-end mt-4">
+        <button class="btn btn-sm btn-outline" (click)="openModifySummaryModal(sum)">Modify</button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+  <!-- Education -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Education</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let edu of education; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyEducationModal(edu)">	
+              <td class="py-3 px-4 font-medium">{{ edu.degree }}</td>
+              <td class="py-3 px-4">{{ edu.institution }} • {{ edu.location }}</td>
+              <td class="py-3 px-4 text-right">
+                {{ edu.startDate | date:'MMM yyyy' }} – {{ edu.endDate | date:'MMM yyyy' }}
+              </td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="3" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-primary" onclick="modalEducation.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Experience</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let exp of experience; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyExperienceModal(exp)">
+              <td class="py-3 px-4 flex items-center space-x-3">
+                <img [src]="exp.logo" alt="{{ exp.company }} logo" class="w-8 h-8 rounded-sm object-cover"/>
+                <div>
+                  <div class="font-medium">{{ exp.jobTitle }}</div>
+                  <div class="text-xs text-gray-500">{{ exp.company }}</div>
+                </div>
+              </td>
+              <td class="py-3 px-4">
+                <p>{{ exp.description }}</p>
+                <p class="text-xs text-gray-500">{{ exp.location }}</p>
+              </td>
+              <td class="py-3 px-4 text-right whitespace-nowrap">
+                {{ exp.startDate | date:'MMM yyyy' }} – {{ exp.endDate | date:'MMM yyyy' }}
+              </td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="3" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalExperience.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certifications -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Certifications</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let cert of certifications; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyCertificationModal(cert)">
+              <td class="py-3 px-4">{{ cert.certificationName }}</td>
+              <td class="py-3 px-4">{{ cert.institution }}</td>
+              <td class="py-3 px-4 text-right whitespace-nowrap">
+                {{ cert.dateObtained | date:'MMM yyyy' }}
+                <span *ngIf="cert.expirationDate">– {{ cert.expirationDate | date:'MMM yyyy' }}</span>
+              </td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="3" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalCertification.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Projects</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let proj of projects; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyProjectModal(proj)">
+              <td class="py-3 px-4 flex items-center space-x-3">
+                <img [src]="proj.logo" alt="{{ proj.title }} logo" class="w-8 h-8 rounded-sm object-cover"/>
+                <div class="font-medium">{{ proj.title }}</div>
+              </td>
+              <td class="py-3 px-4">{{ proj.description }}</td>
+              <td class="py-3 px-4 whitespace-nowrap">
+                <a [href]="proj.link" target="_blank" class="link link-primary">View</a>
+              </td>
+              <td class="py-3 px-4 text-right whitespace-nowrap">
+                {{ proj.startDate | date:'MMM yyyy' }} – {{ proj.endDate | date:'MMM yyyy' }}
+              </td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="4" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalProject.showModal()">Add New</button>
+        </div>
+    </div>
+  </div>
+
+  <!-- Hard Skills -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Hard Skills</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let skill of hardSkills; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyHardSkillModal(skill)">
+              <td class="py-3 px-4 flex items-center space-x-3">
+                <img [src]="skill.logo" alt="{{ skill.name }} logo" class="w-6 h-6 rounded-sm object-cover"/>
+                <span>{{ skill.name }}</span>
+              </td>
+              <td class="py-3 px-4 text-right">{{ skill.level }}/5</td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="2" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalHardSkill.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Soft Skills -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Soft Skills</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let skill of softSkills; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifySoftSkillModal(skill)">
+              <td class="py-3 px-4 flex items-center space-x-3">
+                <img [src]="skill.logo" alt="{{ skill.name }} logo" class="w-6 h-6 rounded-sm object-cover"/>
+                <span>{{ skill.name }}</span>
+              </td>
+              <td class="py-3 px-4 text-right">{{ skill.level }}/5</td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="2" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalSoftSkill.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Languages</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let lang of languages; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyLanguageModal(lang)">
+              <td class="py-3 px-4">{{ lang.name }}</td>
+              <td class="py-3 px-4 text-right">{{ lang.level }}/5</td>
+            </tr>
+            <tr *ngIf="!last">
+              <td colspan="2" class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalLanguage.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interests -->
+  <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+    <input type="radio" name="cv-accordion" />
+    <div class="collapse-title font-semibold">Interests</div>
+    <div class="collapse-content p-0">
+      <table class="w-full text-sm text-gray-600">
+        <tbody>
+          <ng-container *ngFor="let it of interests; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyInterestModal(it)">
+              <td class="py-3 px-4">{{ it.interest }}</td>
+            </tr>
+            <tr *ngIf="!last">
+              <td class="h-0.5 bg-gray-200"></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="flex justify-end p-4 gap-2">
+        <button class="btn btn-sm btn-outline">Modify</button>
+        <button class="btn btn-sm btn-primary" onclick="modalInterest.showModal()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal for Education -->
+<dialog id="modalEducation" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6">
+
+    <h3 class="text-2xl font-bold">Add Education</h3>
+
+    <!-- Degree -->
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Degree</span>
+      </label>
+      <input type="text" name="degree" placeholder="e.g. B.Sc. Computer Science"
+             class="input input-bordered w-full" required />
+    </div>
+
+    <!-- School -->
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">School</span>
+      </label>
+      <input type="text" name="school" placeholder="e.g. University of Example"
+             class="input input-bordered w-full" required />
+    </div>
+
+    <!-- Date Range -->
+    <div class="grid grid-cols-2 gap-4">
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">Start Date</span>
+        </label>
+        <input type="date" name="startDate" class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text">End Date</span>
+        </label>
+        <input type="date" name="endDate" class="input input-bordered w-full" />
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Location</span>
+      </label>
+      <input type="text" name="location" placeholder="City, Country"
+             class="input input-bordered w-full" />
+    </div>
+
+    <!-- Logo -->
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Logo</span>
+      </label>
+      <input type="file" accept="image/*" 
+             class="file-input input-bordered w-full" />
+    </div>
+
+
+    <!-- Description -->
+    <div class="form-control w-full">
+      <label class="label">
+        <span class="label-text">Description</span>
+      </label>
+      <textarea name="description" rows="3" placeholder="Brief description…"
+                class="textarea textarea-bordered w-full"></textarea>
+    </div>
+
+    <!-- Actions -->
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeEducationModal()">Cancel</button>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+  </form>
+</dialog>
+
+<!-- Modal for Experience -->
+<dialog id="modalExperience" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Experience</h3>
+    
+        <!-- Job Title -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text">Job Title</span>
+        </label>
+        <input type="text" name="jobTitle" placeholder="e.g. Software Engineer"
+                 class="input input-bordered w-full" required />
+        </div>
+    
+        <!-- Company -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text">Company</span>
+        </label>
+        <input type="text" name="company" placeholder="e.g. Tech Company"
+                 class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Date Range -->
+        <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text
+            ">Start Date</span>
+            </label>
+            <input type="date" name="startDate" class="input input-bordered w-full" required />
+        </div>
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text
+            ">End Date</span>
+            </label>
+            <input type="date" name="endDate" class="input input-bordered w-full" />
+        </div>
+        </div>
+
+        <!-- Location -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Location</span>
+        </label>
+        <input type="text" name="location" placeholder="City, Country"
+                 class="input input-bordered w-full" />
+        </div>
+
+        <!-- Description -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Description</span>
+        </label>
+        <textarea name="description" rows="3" placeholder="Brief description…"
+                class="textarea textarea-bordered w-full"></textarea>
+        </div>
+
+        <!-- Logo -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Logo</span>
+        </label>
+        <input type="file" accept="image/*" 
+                class="file-input input-bordered w-full" />
+        </div>
+
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeExperienceModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Modal for Certifications -->
+<dialog id="modalCertification" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Certification</h3>
+    
+        <!-- Certification Name -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text">Certification Name</span>
+        </label>
+        <input type="text" name="certificationName" placeholder="e.g. AWS Certified Solutions Architect"
+                 class="input input-bordered w-full" required />
+        </div>
+    
+        <!-- Institution -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Institution</span>
+        </label>
+        <input type="text" name="institution" placeholder="e.g. Amazon"
+                 class="input input-bordered w-full" required />
+        </div>
+        
+        <!-- Date Obtained -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Date Obtained</span>
+        </label>
+        <input type="date" name="dateObtained" class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Expiration Date -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Expiration Date</span>
+        </label>
+        <input type="date" name="expirationDate" class="input input-bordered w-full" />
+        </div>
+
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeCertificationModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Modal for Projects -->
+<dialog id="modalProject" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Project</h3>
+    
+        <!-- Project Title -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Project Title</span>
+        </label>
+        <input type="text" name="projectTitle" placeholder="e.g. Personal Portfolio"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Description -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Description</span>
+        </label>
+        <textarea name="description" rows="3" placeholder="Brief description…"
+                class="textarea textarea-bordered w-full"></textarea>
+        </div>
+        <!-- Project Link -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Project Link</span>
+        </label>
+        <input type="url" name="projectLink" placeholder="e.g.github.com/username/repo"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Logo -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Logo</span>
+        </label>
+        <input type="file" accept="image/*" 
+                class="file-input input-bordered w-full" />
+        </div>
+        <!-- Date Range -->
+        <div class="grid grid-cols-2 gap-4">
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text
+            ">Start Date</span>
+            </label>
+            <input type="date" name="startDate" class="input input-bordered w-full" required />
+        </div>
+        <div class="form-control">
+            <label class="label">
+            <span class="label-text
+            ">End Date</span>
+            </label>
+            <input type="date" name="endDate" class="input input-bordered w-full" />
+        </div>
+        </div>
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeProjectModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Hard Skill Modal -->
+<dialog id="modalHardSkill" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Hard Skill</h3>
+    
+        <!-- Skill Name -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Skill Name</span>
+        </label>
+        <input type="text" name="skillName" placeholder="e.g. JavaScript"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Skill Level -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Skill Level</span>
+        </label>
+        <input type="number" name="skillLevel" min="1" max="5" placeholder="1-5"
+                 class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeHardSkillModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Soft Skill Modal -->
+<dialog id="modalSoftSkill" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Soft Skill</h3>
+    
+        <!-- Skill Name -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Skill Name</span>
+        </label>   
+        <input type="text" name="skillName" placeholder="e.g. Communication"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Skill Level -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Skill Level</span>
+        </label>
+        <input type="number" name="skillLevel" min="1" max="5" placeholder="1-5"
+                 class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeSoftSkillModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Language Modal -->
+<dialog id="modalLanguage" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Language</h3>
+    
+        <!-- Language Name -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Language Name</span>
+        </label>
+        <input type="text" name="languageName" placeholder="e.g. English"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Language Level -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Language Level</span>
+        </label>
+        <input type="number" name="languageLevel" min="1" max="5" placeholder="1-5"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeLanguageModal()">Cancel</button>   
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Interest Modal -->
+<dialog id="modalInterest" class="modal">
+    <form method="dialog" class="modal-box max-w-xl space-y-6">
+    
+        <h3 class="text-2xl font-bold">Add Interest</h3>
+    
+        <!-- Interest Name -->
+        <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text
+            ">Interest Name</span>
+        </label>
+        <input type="text" name="interestName" placeholder="e.g. Traveling"
+                 class="input input-bordered w-full" required />
+        </div>
+        <!-- Actions -->
+        <div class="modal-action justify-end">
+        <button type="button" class="btn btn-outline" (click)="closeInterestModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<!-- Contact Info Modify Modal -->
+<dialog id="modalContactModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedContact">
+    <h3 class="text-2xl font-bold">Modify Contact Info</h3>
+
+    <div class="grid grid-cols-1 gap-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Name</span></label>
+        <input type="text" [(ngModel)]="selectedContact.name" name="name"
+               class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Email</span></label>
+        <input type="email" [(ngModel)]="selectedContact.email" name="email"
+               class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Phone</span></label>
+        <input type="tel" [(ngModel)]="selectedContact.phone" name="phone"
+               class="input input-bordered w-full" />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Address</span></label>
+        <input type="text" [(ngModel)]="selectedContact.address" name="address"
+               class="input input-bordered w-full" />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">LinkedIn</span></label>
+        <input type="url" [(ngModel)]="selectedContact.linkedIn" name="linkedIn"
+               class="input input-bordered w-full" />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">GitHub</span></label>
+        <input type="url" [(ngModel)]="selectedContact.github" name="github"
+               class="input input-bordered w-full" />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Website</span></label>
+        <input type="url" [(ngModel)]="selectedContact.website" name="website"
+               class="input input-bordered w-full" />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Description</span></label>
+        <textarea [(ngModel)]="selectedContact.description" name="description" rows="3"
+                  class="textarea textarea-bordered w-full"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyContactModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveContact()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Summary Modify Modal -->
+<dialog id="modalSummaryModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedSummary">
+    <h3 class="text-2xl font-bold">Modify Summary</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Summary Text</span></label>
+      <textarea [(ngModel)]="selectedSummary.summary" name="summary" rows="4"
+                class="textarea textarea-bordered w-full"></textarea>
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifySummaryModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveSummary()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Education Modify Modal -->
+<dialog id="modalEducationModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedEducation">
+    <h3 class="text-2xl font-bold">Modify Education</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Degree</span></label>
+      <input type="text" [(ngModel)]="selectedEducation.degree" name="degree"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">School</span></label>
+      <input type="text" [(ngModel)]="selectedEducation.institution" name="school"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Start Date</span></label>
+        <input type="date" [(ngModel)]="selectedEducation.startDate" name="startDate"
+               class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">End Date</span></label>
+        <input type="date" [(ngModel)]="selectedEducation.endDate" name="endDate"
+               class="input input-bordered w-full" />
+      </div>
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Location</span></label>
+      <input type="text" [(ngModel)]="selectedEducation.location" name="location"
+             class="input input-bordered w-full" />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Logo URL</span></label>
+      <input type="url" [(ngModel)]="selectedEducation.logo" name="logo"
+             class="input input-bordered w-full" />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Description</span></label>
+      <textarea [(ngModel)]="selectedEducation.description" name="description" rows="3"
+                class="textarea textarea-bordered w-full"></textarea>
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyEducationModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedEducation()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Experience Modify Modal -->
+<dialog id="modalExperienceModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedExperience">
+    <h3 class="text-2xl font-bold">Modify Experience</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Job Title</span></label>
+      <input type="text" [(ngModel)]="selectedExperience.jobTitle" name="jobTitle"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Company</span></label>
+      <input type="text" [(ngModel)]="selectedExperience.company" name="company"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Start Date</span></label>
+        <input type="date" [(ngModel)]="selectedExperience.startDate" name="startDate"
+               class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">End Date</span></label>
+        <input type="date" [(ngModel)]="selectedExperience.endDate" name="endDate"
+               class="input input-bordered w-full" />
+      </div>
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Location</span></label>
+      <input type="text" [(ngModel)]="selectedExperience.location" name="location"
+             class="input input-bordered w-full" />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Description</span></label>
+      <textarea [(ngModel)]="selectedExperience.description" name="description" rows="3"
+                class="textarea textarea-bordered w-full"></textarea>
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Logo URL</span></label>
+      <input type="url" [(ngModel)]="selectedExperience.logo" name="logo"
+             class="input input-bordered w-full" />
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyExperienceModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedExperience()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Certification Modify Modal -->
+<dialog id="modalCertificationModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedCertification">
+    <h3 class="text-2xl font-bold">Modify Certification</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Name</span></label>
+      <input type="text" [(ngModel)]="selectedCertification.certificationName" name="certificationName"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Institution</span></label>
+      <input type="text" [(ngModel)]="selectedCertification.institution" name="institution"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Date Obtained</span></label>
+        <input type="date" [(ngModel)]="selectedCertification.dateObtained" name="dateObtained"
+               class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">Expiration Date</span></label>
+        <input type="date" [(ngModel)]="selectedCertification.expirationDate" name="expirationDate"
+               class="input input-bordered w-full" />
+      </div>
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyCertificationModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedCertification()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Project Modify Modal -->
+<dialog id="modalProjectModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedProject">
+    <h3 class="text-2xl font-bold">Modify Project</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Title</span></label>
+      <input type="text" [(ngModel)]="selectedProject.title" name="title"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Description</span></label>
+      <textarea [(ngModel)]="selectedProject.description" name="description" rows="3"
+                class="textarea textarea-bordered w-full"></textarea>
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Link</span></label>
+      <input type="url" [(ngModel)]="selectedProject.link" name="link"
+             class="input input-bordered w-full" />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Logo URL</span></label>
+      <input type="url" [(ngModel)]="selectedProject.logo" name="logo"
+             class="input input-bordered w-full" />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Start Date</span></label>
+        <input type="date" [(ngModel)]="selectedProject.startDate" name="startDate"
+               class="input input-bordered w-full" required />
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text">End Date</span></label>
+        <input type="date" [(ngModel)]="selectedProject.endDate" name="endDate"
+               class="input input-bordered w-full" />
+      </div>
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyProjectModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedProject()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Hard Skill Modify Modal -->
+<dialog id="modalHardSkillModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedHardSkill">
+    <h3 class="text-2xl font-bold">Modify Hard Skill</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Skill Name</span></label>
+      <input type="text" [(ngModel)]="selectedHardSkill.name" name="name"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Level (1–5)</span></label>
+      <input type="number" [(ngModel)]="selectedHardSkill.level" name="level" min="1" max="5"
+             class="input input-bordered w-full" required />
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyHardSkillModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedHardSkill()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Soft Skill Modify Modal -->
+<dialog id="modalSoftSkillModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedSoftSkill">
+    <h3 class="text-2xl font-bold">Modify Soft Skill</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Skill Name</span></label>
+      <input type="text" [(ngModel)]="selectedSoftSkill.name" name="name"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Level (1–5)</span></label>
+      <input type="number" [(ngModel)]="selectedSoftSkill.level" name="level" min="1" max="5"
+             class="input input-bordered w-full" required />
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifySoftSkillModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedSoftSkill()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Language Modify Modal -->
+<dialog id="modalLanguageModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedLanguage">
+    <h3 class="text-2xl font-bold">Modify Language</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Language</span></label>
+      <input type="text" [(ngModel)]="selectedLanguage.name" name="name"
+             class="input input-bordered w-full" required />
+    </div>
+    <div class="form-control">
+      <label class="label"><span class="label-text">Level (1–5)</span></label>
+      <input type="number" [(ngModel)]="selectedLanguage.level" name="level" min="1" max="5"
+             class="input input-bordered w-full" required />
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyLanguageModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedLanguage()">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Interest Modify Modal -->
+<dialog id="modalInterestModify" class="modal">
+  <form method="dialog" class="modal-box max-w-xl space-y-6" *ngIf="selectedInterest">
+    <h3 class="text-2xl font-bold">Modify Interest</h3>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text">Interest</span></label>
+      <input type="text" [(ngModel)]="selectedInterest.interest" name="interest"
+             class="input input-bordered w-full" required />
+    </div>
+
+    <div class="modal-action justify-end">
+      <button type="button" class="btn btn-outline" (click)="closeModifyInterestModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveModifiedInterest()">Save</button>
+    </div>
+  </form>
+</dialog>

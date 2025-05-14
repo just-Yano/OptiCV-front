@@ -19,4 +19,8 @@ export class NavigationService {
   navigateToEvaluation() {
     this.router.navigate(['/evaluation']);
   }
+
+  navigateToTailoring() {
+    this.router.navigate(['/tailoring']);
+  }
 }

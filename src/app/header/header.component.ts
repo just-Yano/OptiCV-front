@@ -20,4 +20,8 @@ export class HeaderComponent {
   navigateToEvaluation() {
     this.navigationService.navigateToEvaluation();
   }
+
+  navigateToTailoring() {
+    this.navigationService.navigateToTailoring();
+  }
 }
