@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '../navigation.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/authentication/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent {
       confirmPassword: ''
     };
 
-  constructor(private navigationService: NavigationService, private router : Router) {}
+  constructor(private navigationService: NavigationService, private router : Router, private aut : AuthService) {}
 
   onSubmit(registerForm: NgForm) {
     // double check if the form is valid
@@ -47,7 +48,7 @@ export class RegisterComponent {
         }
         return response.json();
       }).then(data => {
-        sessionStorage.setItem('token', data.token);
+        this.aut.login(data.token);
         this.successMessage = 'Welcome to OptiCV!';
         registerForm.reset();
         setTimeout(() => {

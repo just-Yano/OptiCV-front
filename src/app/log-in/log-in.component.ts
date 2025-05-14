@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '../navigation.service';
+import { AuthService } from '../services/authentication/auth.service';
 
 @Component({
   selector: 'app-log-in',
@@ -12,7 +13,7 @@ import { NavigationService } from '../navigation.service';
 export class LogInComponent {
   errorMessage: string = '';
   successMessage: string = '';
-  constructor(private navigationService: NavigationService) { }
+  constructor(private navigationService: NavigationService, private auth : AuthService) { }
 
   onSubmit(loginForm: NgForm) {
     // get the form data
@@ -32,7 +33,7 @@ export class LogInComponent {
         return response.json();
       }).then(data => {
         // store the token in session storage
-        sessionStorage.setItem('token', data.token);
+        this.auth.login(data.token);
         // reset the form
         loginForm.reset();
         // show success message
