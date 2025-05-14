@@ -34,11 +34,16 @@
                 <img alt="Login icon" src="login.png" />
             </div>
         </div>
-        <!--TODO account creation connection and deconnection-->
         <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow ">
             <li>
-                <a class="justify-between" (click)="navigateToLogin()">
-                    Se connecter
+                <a *ngIf="!isLoggedIn" class="justify-between" (click)="navigateToLogin()">
+                    Sign in
+                </a>
+                <a *ngIf="isLoggedIn" class="justify-between" (click)="navigateToPreferences()">
+                    Preferences
+                </a>
+                <a *ngIf="isLoggedIn" class="justify-between" (click)="logOut()" class="text-red-500">
+                    Sign out
                 </a>
             </li>
         </ul>

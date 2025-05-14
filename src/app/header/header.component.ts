@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../navigation.service';  
+import { AuthService } from '../services/authentication/auth.service';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  constructor(private navigationService: NavigationService) { }
+  public isLoggedIn: boolean = false;
+  constructor(private navigationService: NavigationService, private auth : AuthService) { 
+    this.isLoggedIn = this.auth.isLoggedIn();
+  }
   
   navigateToHome() {
     this.navigationService.navigateToHome();
@@ -23,5 +29,14 @@ export class HeaderComponent {
 
   navigateToLogin() {
     this.navigationService.navigateToLogin();
+  }
+
+  navigateToPreferences() {
+    this.navigationService.navigateToPreferences();
+  }
+
+  logOut() {
+    this.auth.logout();
+    this.navigationService.navigateToHome();
   }
 }
