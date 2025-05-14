@@ -1,6 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GetProfilResponse } from '../../interfaces/GetProfilResponse';
+import { ContactInfo } from '../../interfaces/contact-info';
+import { Experience } from '../../interfaces/experience';
+import { Education } from '../../interfaces/education';
+import { Certification } from '../../interfaces/certification';
+import { Project } from '../../interfaces/project';
+import { HardSkill } from '../../interfaces/hard-skill';
+import { SoftSkill } from '../../interfaces/soft-skill';
+import { Language } from '../../interfaces/language';
+import { Interest } from '../../interfaces/interest';
+import { Summary } from '../../interfaces/summary';
+
 
 @Component({
   selector: 'app-view-section',
@@ -11,216 +23,58 @@ import { FormsModule } from '@angular/forms';
 export class ViewSectionComponent {
   @Input() showAddButton: boolean = false;
 
-  // Sample data for the view section. TODO fetch from backend
-  contact = [
-    {
-      name: 'John Doe',
-      email: 'johndoe@insa-lyon.fr',
-      phone: '+33 6 12 34 56 78',
-      address: '123 Main St, Lyon, France',
-      website: 'https://johndoe.com',
-      linkedIn: 'https://www.linkedin.com/in/johndoe',
-      github: 'github.com/johndoe',
-      description: 'Software engineer with a passion for technology and data science.',
-    }
-  ];
-  summary = [
-    {
-      summary: 'Experienced software engineer with a strong background in web development and data analysis. Proficient in JavaScript, Python, and SQL. Excellent problem-solving skills and a team player.'
-    }
-  ];
-  experience = [
-    {
-      jobTitle: 'Software Engineer',
-      company: 'Tech Company',
-      startDate: '2020-01-01',
-      endDate: '2021-01-01',
-      location: 'New York, NY',
-      description: 'Developed web applications using Angular and Node.js.',
-      logo: 'https://example.com/logo.png',
-      id: 1
+  contactInfo: ContactInfo[] = [];
+  summary: Summary[] = [];
+  experiences: Experience[] = [];
+  educations: Education[] = [];
+  hardSkills: HardSkill[] = [];
+  softSkills: SoftSkill[] = [];
+  projects: Project[] = [];
+  languages: Language[] = [];
+  certifications: Certification[] = [];
+  interests: Interest[] = [];
+
+  ngOnInit() {
+    const email = 'daniel@opti.com';
+    this.fetchProfile(email);
+  }
+
+  fetchProfile(email: string) {
+  fetch('http://localhost:8080/api/user/getProfile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-    {
-      jobTitle: 'Data Analyst',
-      company: 'Data Corp',
-      startDate: '2019-01-01',
-      endDate: '2020-01-01',
-      location: 'San Francisco, CA',
-      description: 'Analyzed data using Python and SQL.',
-      logo: 'https://example.com/logo2.png',
-      id: 2
-    },
-    {
-      jobTitle: 'Intern',
-      company: 'Startup Inc.',
-      startDate: '2018-01-01',
-      endDate: '2018-12-31',
-      location: 'Los Angeles, CA',
-      description: 'Assisted in software development and testing.',
-      logo: 'https://example.com/logo3.png',
-      id: 3
-    },
-    {
-      jobTitle: 'Research Assistant',
-      company: 'University Lab',
-      startDate: '2017-01-01',
-      endDate: '2017-12-31',
-      location: 'Los Angeles, CA',
-      description: 'Conducted research on machine learning algorithms.',
-      logo: 'https://example.com/logo4.png',
-      id: 4
-    }
-  ];
-  education = [
-    {
-      degree: 'Bachelor of Science in Computer Science',
-      institution: 'University of Example',
-      startDate: '2015-01-01',
-      endDate: '2019-01-01',
-      location: 'Los Angeles, CA',
-      description: 'Studied computer science with a focus on software development.',
-      logo: 'https://example.com/logo3.png',
-      id: 1
-    },  
-    {
-      degree: 'Master of Science in Data Science',
-      institution: 'University of Example',
-      startDate: '2019-01-01',
-      endDate: '2021-01-01',
-      location: 'Los Angeles, CA',
-      description: 'Studied data science with a focus on machine learning.',
-      logo: 'https://example.com/logo4.png',
-      id: 2
-    }
-  ];
-  certifications = [
-    {
-      certificationName: 'Certified Data Scientist',
-      institution: 'Data Science Institute',
-      dateObtained: '2021-01-01',
-      expirationDate: '2023-01-01',
-      id: 1
-    },
-    {
-      certificationName: 'Certified Software Engineer',
-      institution: 'Software Engineering Institute',
-      dateObtained: '2020-01-01',
-      expirationDate: '2022-01-01',
-      id: 2
-    },
-  ];
-  projects = [
-    {
-      title: 'Personal Portfolio Website',
-      description: 'Developed a personal portfolio website using Angular and Bootstrap.',
-      startDate: '2021-01-01',
-      endDate: '2021-06-01',
-      logo: 'https://example.com/logo5.png',
-      link: 'https://example.com/portfolio',
-      id: 1
-    },
-    {
-      title: 'Data Analysis Project',
-      description: 'Analyzed a dataset using Python and created visualizations.',
-      startDate: '2020-01-01',
-      endDate: '2020-06-01',
-      logo: 'https://example.com/logo6.png',
-      link: 'https://example.com/data-analysis',
-      id: 2
-    },
-  ];
-  hardSkills = [
-    {
-      name: 'JavaScript',
-      logo: 'https://example.com/logo7.png',
-      level: 5,
-      id: 1
-    },
-    {
-      name: 'Python',
-      logo: 'https://example.com/logo8.png',
-      level: 4,
-      id: 2
-    },
-    {
-      name: 'Java',
-      logo: 'https://example.com/logo9.png',
-      level: 3,
-      id: 3
-    },
-    {
-      name: 'C++',
-      logo: 'https://example.com/logo10.png',
-      level: 2,
-      id: 4
-    }
-  ];
-  softSkills = [
-    {
-      name: 'Communication',
-      logo: 'https://example.com/logo11.png',
-      level: 5,
-      id: 1
-    },
-    {
-      name: 'Teamwork',
-      logo: 'https://example.com/logo12.png',
-      level: 4,
-      id: 2
-    },
-    {
-      name: 'Problem Solving',
-      logo: 'https://example.com/logo13.png',
-      level: 3,
-      id: 3
-    },
-    {
-      name: 'Time Management',
-      logo: 'https://example.com/logo14.png',
-      level: 2,
-      id: 4
-    }
-  ];
-  languages = [
-    {
-      name: 'English',
-      level: 5,
-      id: 1
-    },
-    {
-      name: 'Spanish',
-      level: 4,
-      id: 2
-    },
-    {
-      name: 'French',
-      level: 3,
-      id: 3
-    },
-    {
-      name: 'German',
-      level: 2,
-      id: 4
-    }
-  ];
-  interests = [
-    {
-      id: 1,
-      interest: 'Technology'
-    },
-    {
-      id: 2,
-      interest: 'Data Science'
-    },
-    {
-      id: 3,
-      interest: 'Software Development'
-    },
-    {
-      id: 4,
-      interest: 'Machine Learning'
-    }
-  ];
+    body: JSON.stringify({ email }),
+  })
+    .then(response => {
+      console.log('Response:', response);
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile');
+      }
+      return response.json();
+    })
+    .then((data: GetProfilResponse) => {
+      console.log('Profile data:', data); // Debug print
+
+      this.educations = data.educations || [];
+      this.experiences = data.experiences || [];
+      this.hardSkills = data.hardSkills || [];
+      this.softSkills = data.softSkills || [];
+      this.projects = data.projects || [];
+      this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
+      this.summary = data.summary ? [data.summary] : [];
+      this.languages = data.languages || [];
+      this.certifications = data.certifications || [];
+      this.interests = data.interests || [];
+    })
+    .catch(error => {
+      console.error('Error fetching profile:', error);
+    });
+}
+
+
+
 
   // “selected” holders for each section:
   selectedContact: any = null;
@@ -240,8 +94,8 @@ export class ViewSectionComponent {
     (document.getElementById('modalContactModify') as HTMLDialogElement).showModal();
   }
   saveContact() {
-    const idx = this.contact.findIndex(c => c.email === this.selectedContact.email);
-    if (idx !== -1) this.contact[idx] = { ...this.selectedContact };
+    const idx = this.contactInfo.findIndex(c => c.email === this.selectedContact.email);
+    if (idx !== -1) this.contactInfo[idx] = { ...this.selectedContact };
     (document.getElementById('modalContactModify') as HTMLDialogElement).close();
   }
   closeModifyContactModal() {
@@ -270,8 +124,8 @@ export class ViewSectionComponent {
     (document.getElementById('modalEducationModify') as HTMLDialogElement).showModal();
   }
   saveModifiedEducation() {
-    const idx = this.education.findIndex(e => e.id === this.selectedEducation.id);
-    if (idx !== -1) this.education[idx] = { ...this.selectedEducation };
+    const idx = this.educations.findIndex(e => e.id === this.selectedEducation.id);
+    if (idx !== -1) this.educations[idx] = { ...this.selectedEducation };
     (document.getElementById('modalEducationModify') as HTMLDialogElement).close();
   }
 
@@ -291,8 +145,8 @@ export class ViewSectionComponent {
     (document.getElementById('modalExperienceModify') as HTMLDialogElement).showModal();
   }
   saveModifiedExperience() {
-    const idx = this.experience.findIndex(e => e.id === this.selectedExperience.id);
-    if (idx !== -1) this.experience[idx] = { ...this.selectedExperience };
+    const idx = this.experiences.findIndex(e => e.id === this.selectedExperience.id);
+    if (idx !== -1) this.experiences[idx] = { ...this.selectedExperience };
     (document.getElementById('modalExperienceModify') as HTMLDialogElement).close();
   }
   closeModifyExperienceModal() {
@@ -417,6 +271,9 @@ export class ViewSectionComponent {
     const modal = document.getElementById('modalInterest') as HTMLDialogElement;
     modal.close();
   }
+
+
+  
   
 }
 

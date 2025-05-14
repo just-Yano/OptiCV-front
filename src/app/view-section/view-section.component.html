@@ -4,7 +4,7 @@
 <div class="card bg-base-100 shadow-md border border-base-300 mb-6">
   <div class="card-body">
     <h2 class="card-title">Contact Info</h2>
-    <ng-container *ngFor="let con of contact">
+    <ng-container *ngFor="let con of contactInfo">
       <div class="text-sm text-gray-500 space-y-1">
         <p><strong>Name:</strong> {{ con.name }}</p>
         <p><strong>Email:</strong> {{ con.email }}</p>
@@ -42,10 +42,10 @@
     <div class="collapse-content p-0">
       <table class="w-full text-sm text-gray-600">
         <tbody>
-          <ng-container *ngFor="let edu of education; let last = last">
+          <ng-container *ngFor="let edu of educations; let last = last">
             <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyEducationModal(edu)">	
               <td class="py-3 px-4 font-medium">{{ edu.degree }}</td>
-              <td class="py-3 px-4">{{ edu.institution }} • {{ edu.location }}</td>
+              <td class="py-3 px-4">{{ edu.school }} • {{ edu.location }}</td>
               <td class="py-3 px-4 text-right">
                 {{ edu.startDate | date:'MMM yyyy' }} – {{ edu.endDate | date:'MMM yyyy' }}
               </td>
@@ -65,11 +65,11 @@
   <!-- Experience -->
   <div class="collapse collapse-arrow bg-base-100 border border-base-300">
     <input type="radio" name="cv-accordion" />
-    <div class="collapse-title font-semibold">Experience</div>
+    <div class="collapse-title font-semibold">Experiences</div>
     <div class="collapse-content p-0">
       <table class="w-full text-sm text-gray-600">
         <tbody>
-          <ng-container *ngFor="let exp of experience; let last = last">
+          <ng-container *ngFor="let exp of experiences; let last = last">
             <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyExperienceModal(exp)">
               <td class="py-3 px-4 flex items-center space-x-3">
                 <img [src]="exp.logo" alt="{{ exp.company }} logo" class="w-8 h-8 rounded-sm object-cover"/>
