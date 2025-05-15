@@ -1,58 +1,57 @@
-<!-- template-gallery.component.html -->
-<div class="px-6 py-10 max-w-7xl mx-auto">
-  <h2 class="text-2xl font-bold mb-6">Choose a Template</h2>
+<h2 class="text-2xl font-bold mb-6">Pick a Template</h2>
+<div class="px-6 py-10 flex flex-col items-center">
+  <!-- New “pick a template” text -->
 
-  <!-- responsive grid: 1 / 2 / 4 cols -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div
-      *ngFor="let template of pagedTemplates; trackBy: trackById"
-      (click)="sendTemplate(template)"
-      class="relative group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-lg
-             transform transition duration-300 hover:shadow-2xl hover:scale-105"
-    >
-
-      <!-- FULL-CARD PREVIEW -->
-        <!-- Thumbnail wrapper -->
+  <!-- grid container -->
+  <div class="grid grid-cols-2 gap-8 max-w-4xl w-full">
+    <ng-container *ngFor="let template of pagedTemplates; trackBy: trackById">
+      <div
+        (click)="sendTemplate(template)"
+        class="relative group cursor-pointer bg-white rounded-2xl shadow-lg
+               transform transition hover:shadow-2xl hover:scale-105 overflow-hidden"
+      >
+        <!-- A4‐ratio thumbnail -->
         <div
-        class="w-full h-96 sm:h-80 md:h-64 lg:h-72 xl:h-80 flex items-center justify-center bg-white"
+          class="svg-thumb w-full aspect-[210/297] flex items-center justify-center
+                 bg-gray-50 overflow-hidden"
         >
-        <div [innerHTML]="template.safeThumbnail" class="max-h-full max-w-full"></div>
+          <div [innerHTML]="template.safeThumbnail"></div>
         </div>
 
+        <!-- Name bar -->
+        <div class="px-4 py-2 border-t">
+          <h3 class="text-lg font-medium text-gray-800">{{ template.name }}</h3>
+        </div>
 
-      <!-- NAME BAR -->
-      <div class="px-4 py-3 bg-gray-50">
-        <h3 class="text-lg font-medium text-gray-800">{{ template.name }}</h3>
+        <!-- Hover overlay -->
+        <div
+          class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60
+                 flex items-center justify-center px-4 text-center text-white text-sm
+                 opacity-0 group-hover:opacity-100 transition-all duration-300"
+        >
+          {{ template.description }}
+        </div>
       </div>
-
-      <!-- DESCRIPTION OVERLAY ON HOVER -->
-      <div
-        class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60
-               flex items-center justify-center px-4 text-center text-white text-sm
-               opacity-0 group-hover:opacity-100 transition-all duration-300"
-      >
-        {{ template.description }}
-      </div>
-
-    </div>
-  </div>
-
-  <!-- pagination -->
-  <div class="flex justify-center items-center mt-6 space-x-2">
-    <label
-      *ngFor="let page of [].constructor(totalPages); let i = index"
-      class="btn btn-square btn-sm"
-      [ngClass]="{'btn-active': currentPage === i+1}"
-    >
-      <input
-        type="radio"
-        name="pages"
-        [checked]="currentPage === i+1"
-        (change)="onPageChange(i+1)"
-        class="hidden"
-        [attr.aria-label]="'Page ' + (i+1)"
-      />
-      {{ i+1 }}
-    </label>
+    </ng-container>
   </div>
 </div>
+
+
+<!-- pagination stays unchanged -->
+<!-- <div class="flex justify-center items-center mt-6 space-x-2">
+  <label
+    *ngFor="let page of [].constructor(totalPages); let i = index"
+    class="btn btn-square btn-sm"
+    [ngClass]="{'btn-active': currentPage === i+1}"
+  >
+    <input
+      type="radio"
+      name="pages"
+      [checked]="currentPage === i+1"
+      (change)="onPageChange(i+1)"
+      class="hidden"
+      [attr.aria-label]="'Page ' + (i+1)"
+    />
+    {{ i+1 }}
+  </label>
+</div> -->

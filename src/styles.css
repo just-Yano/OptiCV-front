@@ -64,3 +64,10 @@
 
 
 
+/* center the <svg> itself inside its wrapper */
+.svg-thumb svg {
+  display: block;         /* remove inline whitespace */
+  margin: auto;           /* auto center in both axes */
+  max-width: 100%;        /* prevent overflow */
+  max-height: 100%;       /* prevent overflow */
+}
