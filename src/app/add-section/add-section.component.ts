@@ -74,32 +74,48 @@ export class AddSectionComponent {
     */
 
   sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
-  console.log("abel ma neb3at");
-  console.log(cv);
-  fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${userId}&cvTemplateId=${cvTemplateId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(cv),
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch PDF');
-      }
-      return response.blob();
+    console.log("Preparing to send CV to backend...");
+    console.log(cv);
+
+    const requestBody = {
+      templateId: cvTemplateId,
+      userEmail: "daniel@opti.com",
+      educations: cv.education,
+      experiences: cv.experience,
+      hardSkills: cv.hardSkills,
+      softSkills: cv.softSkills,
+      projects: cv.projects,
+      contactInfo: cv.contactInfo,
+      languages: cv.languages,
+      certifications: cv.certifications,
+      interests: cv.interests,
+      summary: cv.summary,
+    };
+
+    fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
     })
-    .then(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const iframe = document.querySelector('iframe'); // Select the iframe element
-      if (iframe) {
-        iframe.src = url; // Set the blob URL as the iframe's src
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch PDF');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const iframe = document.querySelector('iframe'); // Select the iframe element
+        if (iframe) {
+          iframe.src = url; // Set the blob URL as the iframe's src
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
 
   addHardSkill() {
     // API CALL 1 - ADD SECTION
@@ -272,17 +288,23 @@ export class AddSectionComponent {
     const location = (document.getElementById('experienceLocation') as HTMLInputElement).value;
     const description = (document.getElementById('experienceDescription') as HTMLTextAreaElement).value;
 
-    const params = new URLSearchParams({
+    const requestBody = {
       jobTitle: title,
       company: company,
       startDate: startDate,
       endDate: endDate,
       location: location,
-      description: description
-    });
+      description: description,
+      senderEmail: "daniel@opti.com",
+      logo: null // Assuming logo is not provided in the UI
+    };
 
-    fetch(`http://localhost:8080/api/experience/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/experience/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
     })
     .then(response => response.json())
     .then(data => {
