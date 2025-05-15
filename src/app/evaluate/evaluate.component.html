@@ -1,30 +1,72 @@
-<div *ngIf="isLoggedIn">
-  <app-header></app-header>
+<app-header></app-header>
 
-  <fieldset class="fieldset">
-    <legend class="fieldset-legend">Pick a file</legend>
-    <input type="file" #cvInput class="file-input" accept="application/pdf" />
-    <label class="label">Max size 2MB</label>
-  </fieldset>
+<!-- Logged in content -->
+<div *ngIf="isLoggedIn" class="max-w-2xl mx-auto px-6 py-10 space-y-10">
 
-  <button class="btn btn-primary mt-4" (click)="evaluateCV(cvInput)">
-    Evaluer mon CV
-  </button>
+  <!-- Title and intro -->
+  <div class="text-center space-y-2">
+    <h1 class="text-3xl font-bold text-strongText">Analyze Your Resume in Seconds</h1>
+    <p class="text-muted text-lg font-medium">
+      Get an instant evaluation based on real hiring standards used by top recruiters.
+    </p>
+  </div>
 
-  <!-- Use shared loading component -->
-  <app-loading-modal
-    *ngIf="loading"
-    message="Analyse de votre CV en cours... Cela ne prendra que quelques secondes.">
-  </app-loading-modal>
+  <!-- Drag and drop zone -->
+  <div
+    class="w-full max-w-2xl border-2 border-dashed border-primary hover:border-accent rounded-xl p-8 text-center cursor-pointer transition-all duration-300 bg-base-100 shadow-md"
+    (click)="fileInput.click()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    [ngClass]="{ 'bg-primary/10': isDragging }"
+  >
+    <div class="flex flex-col items-center space-y-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      <p class="text-sm text-muted">
+        Drag and drop your PDF file here or click to upload.
+      </p>
+      <p *ngIf="selectedFileName" class="text-sm text-primary font-medium">
+        Selected file: {{ selectedFileName }}
+      </p>
+    </div>
+  </div>
 
-  <!-- Score section -->
-  <app-score-section
-    *ngIf="!loading && score"
-    [score]="score">
-  </app-score-section>
+  <!-- Hidden input -->
+  <input
+    #fileInput
+    type="file"
+    accept="application/pdf"
+    class="hidden"
+    (change)="onFileSelected(fileInput)"
+  />
+
+  <!-- Evaluate Button -->
+  <div class="flex justify-center">
+    <button
+      class="btn btn-primary btn-lg"
+      [disabled]="!selectedFile"
+      (click)="evaluateCV()"
+    >
+      Evaluate My Resume
+    </button>
+  </div>
 </div>
 
-<!-- Message if not logged in -->
+<!-- Loader modal -->
+<app-loading-modal
+  *ngIf="loading"
+  message="We're analyzing your resume... This will only take a few seconds.">
+</app-loading-modal>
+
+<!-- Score result section (full width) -->
+<app-score-section
+  *ngIf="!loading && score"
+  [score]="score">
+</app-score-section>
+
+<!-- Not logged in -->
 <div *ngIf="!isLoggedIn" class="text-center text-red-500 mt-10">
-  You should be logged in to evaluate a CV
+  You must be logged in to evaluate your resume.
 </div>
