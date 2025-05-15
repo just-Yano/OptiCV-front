@@ -43,6 +43,7 @@ export class AddSectionComponent {
   id: 0,
   };
 
+  /*
   // Called in each method to send the CV to the backend
   sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
   fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${userId}&cvTemplateId=${cvTemplateId}`, {
@@ -69,6 +70,51 @@ export class AddSectionComponent {
     .catch(error => {
       console.error('Error:', error);
     });
+  }
+    */
+
+  sendCvToBackend(cv: CV, cvTemplateId: number, userId: number) {
+    console.log("Preparing to send CV to backend...");
+    console.log(cv);
+
+    const requestBody = {
+      templateId: cvTemplateId,
+      userEmail: "daniel@opti.com",
+      educations: cv.education,
+      experiences: cv.experience,
+      hardSkills: cv.hardSkills,
+      softSkills: cv.softSkills,
+      projects: cv.projects,
+      contactInfo: cv.contactInfo,
+      languages: cv.languages,
+      certifications: cv.certifications,
+      interests: cv.interests,
+      summary: cv.summary,
+    };
+
+    fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch PDF');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const iframe = document.querySelector('iframe'); // Select the iframe element
+        if (iframe) {
+          iframe.src = url; // Set the blob URL as the iframe's src
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   addHardSkill() {
@@ -242,17 +288,23 @@ export class AddSectionComponent {
     const location = (document.getElementById('experienceLocation') as HTMLInputElement).value;
     const description = (document.getElementById('experienceDescription') as HTMLTextAreaElement).value;
 
-    const params = new URLSearchParams({
+    const requestBody = {
       jobTitle: title,
       company: company,
       startDate: startDate,
       endDate: endDate,
       location: location,
-      description: description
-    });
+      description: description,
+      senderEmail: "daniel@opti.com",
+      logo: null // Assuming logo is not provided in the UI
+    };
 
-    fetch(`http://localhost:8080/api/experience/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/experience/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
     })
     .then(response => response.json())
     .then(data => {
@@ -276,6 +328,10 @@ export class AddSectionComponent {
 
     this.cv.experience.push(experience);
     const userId = 0;
+
+    console.log("Chouf chou 3am jarrib a3mil la hayda l projet")
+
+    console.log(this.cv.experience);
 
     this.sendCvToBackend(this.cv, this.cvTemplateId, userId);
   }

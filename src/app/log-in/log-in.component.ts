@@ -13,12 +13,15 @@ import { AuthService } from '../services/authentication/auth.service';
 export class LogInComponent {
   errorMessage: string = '';
   successMessage: string = '';
+  isLoading: boolean = false;
+
   constructor(private navigationService: NavigationService, private auth : AuthService) { }
 
   onSubmit(loginForm: NgForm) {
     // get the form data
     const formData = loginForm.value;
-    
+    this.isLoading = true;
+
     // sending the form data to the server
     fetch('http://localhost:8080/api/auth/login', {
       method: 'POST',
@@ -40,6 +43,7 @@ export class LogInComponent {
         this.successMessage = 'Welcome back! Your are being redirected to the home page.';
         // navigate to the home page
         setTimeout(() => {
+          this.isLoading = false;
           this.navigationService.navigateToHome();
           this.successMessage = '';
         }
@@ -48,6 +52,7 @@ export class LogInComponent {
           // handle the error
           this.errorMessage = error.message;
           setTimeout(() => {
+            this.isLoading = false;
             this.errorMessage = '';
         }
         , 3000);

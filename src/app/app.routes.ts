@@ -5,6 +5,7 @@ import { EvaluateComponent } from './evaluate/evaluate.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import { TailoringComponent } from './tailoring/tailoring.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route
@@ -14,4 +15,5 @@ export const routes: Routes = [
     { path: 'login', component: LogInComponent}, 
     { path: 'registration', component: RegisterComponent}, 
     { path: 'profile', component: ProfileComponent}, 
+    { path: 'tailoring', component: TailoringComponent}, // TODO change to TailoringComponent
 ];

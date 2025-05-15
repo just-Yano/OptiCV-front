@@ -1,36 +1,34 @@
-<div class="navbar bg-base-100 shadow-sm">
+<div class="navbar shadow-sm" style="background-color: var(--color-primary); color: var(--color-strong-text);">
     <div class="navbar-start">
-        <a class="btn btn-ghost text-xl">OptiCV</a>
+        <a class="btn btn-ghost text-xl text-strongText">OptiCV</a>
     </div>
+
     <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 flex space-x-4 w-full">
-            <li class="flex"><a (click)="navigateToHome()">Accueil</a></li>
-            <li class="flex"><a (click)="navigateToCreation()">Creation</a></li>
-            <li class="flex"><a (click)="navigateToEvaluation()">Evaluation</a></li>
+        <ul class="menu menu-horizontal px-1 space-x-2">
+            <li><a (click)="navigateToHome()" class="hover:bg-accentOlive hover:text-strongText">Accueil</a></li>
+            <li><a (click)="navigateToCreation()" class="hover:bg-accentOlive hover:text-strongText">Creation</a></li>
+            <li><a (click)="navigateToTailoring()" class="hover:bg-accentOlive hover:text-strongText">Tailoring</a></li>	
+            <li><a (click)="navigateToEvaluation()" class="hover:bg-accentOlive hover:text-strongText">Evaluation</a>
+            </li>
         </ul>
     </div>
+
     <div class="dropdown dropdown-bottom navbar-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-square">
             <div class="w-10 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     class="inline-block h-5 w-5 stroke-current">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z">
-                    </path>
+                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
                 </svg>
             </div>
         </div>
-        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow ">
+        <ul tabindex="0" class="menu menu-sm dropdown-content rounded-box z-10 mt-3 w-52 p-2 shadow"
+            style="background-color: var(--color-background); color: var(--color-strong-text);">
             <li>
-                <a *ngIf="!isLoggedIn" class="justify-between" (click)="navigateToLogin()">
-                    Log in
-                </a>
-                <a *ngIf="isLoggedIn" class="justify-between" (click)="navigateToProfile()">
-                    Profile
-                </a>
-                <a *ngIf="isLoggedIn" class="justify-between" (click)="logOut()" class="text-red-500">
-                    Log out
-                </a>
+                <a *ngIf="!isLoggedIn" (click)="navigateToLogin()">Log in</a>
+                <a *ngIf="isLoggedIn" (click)="navigateToProfile()">Profile</a>
+                <a *ngIf="isLoggedIn" (click)="logOut()" class="text-red-500">Log out</a>
             </li>
         </ul>
     </div>
