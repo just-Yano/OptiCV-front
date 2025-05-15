@@ -7,7 +7,14 @@
     <div class="w-1/2 h-full">
         <h2 class="text-2xl font-bold mb-6">Resume</h2>
         <p class="text-sm text-gray-500 mb-4">This is your tailored resume based on the job offer.</p>
-        <iframe src="" class="w-full h-full"></iframe> <!-- TODO change the src -->
+        <iframe #resumeIframe src="" class="w-full h-full"></iframe> <!-- TODO change the src -->
+
+        <!-- AI comment -->
+        <br>
+        <div class="pt-4">
+            <h2 class="text-2xl font-bold mb-6">AI Comment</h2>
+            <p class="text-sm text-gray-500 mb-4">{{ tailoringComment }}</p>
+        </div>
     </div>
     
     <!-- Right: app-add-section -->

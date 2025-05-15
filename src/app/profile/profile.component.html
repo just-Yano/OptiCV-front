@@ -1,1 +1,189 @@
-<p>profile works!</p>
+<div *ngIf="isLoggedIn">
+    <div *ngIf="!errorMessage">
+        <app-header></app-header>
+        <div class="max-w-4xl mx-auto p-6 bg-background text-strongText rounded-lg shadow-md space-y-8">
+            <h1 class="text-3xl font-bold text-primary border-b border-muted pb-2">Profile Details</h1>
+
+            <section class="space-y-2">
+                <h2 class="text-2xl font-semibold text-primary">Contact Information</h2>
+                <img *ngIf="profile.contactInfo.photo" [src]="profile.contactInfo.photo" alt="Profile Photo"
+                    class="w-32 h-32 object-cover rounded-full border border-muted" />
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                    <p><strong>Name:</strong> {{ profile.contactInfo.name }}</p>
+                    <p><strong>Email:</strong> {{ profile.contactInfo.email }}</p>
+                    <p><strong>Phone:</strong> {{ profile.contactInfo.phone }}</p>
+                    <p><strong>Address:</strong> {{ profile.contactInfo.address }}</p>
+                    <p><strong>LinkedIn:</strong> {{ profile.contactInfo.linkedIn }}</p>
+                    <p><strong>GitHub:</strong> {{ profile.contactInfo.github }}</p>
+                    <p><strong>Website:</strong> {{ profile.contactInfo.website }}</p>
+                    <p class="col-span-full"><strong>Description:</strong> {{ profile.contactInfo.description }}</p>
+                </div>
+            </section>
+
+            <section *ngIf="profile.summary.summary">
+                <h2 class="text-2xl font-semibold text-primary mb-1">Summary</h2>
+                <p class="text-sm text-muted">{{ profile.summary.summary }}</p>
+            </section>
+
+            <section *ngIf="profile.educations.length">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Education</h2>
+                <div class="space-y-4">
+                    <div *ngFor="let edu of profile.educations"
+                        class="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-muted rounded-lg bg-white shadow-sm">
+
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-strongText">
+                                {{ edu.degree }} <span class="text-muted">– {{ edu.school }}</span>
+                            </h3>
+                            <p class="text-sm text-muted">
+                                {{ edu.startDate | date:'MMM d, yyyy' }} – {{ edu.endDate | date:'MMM d, yyyy' }} | {{
+                                edu.location }}
+                            </p>
+                            <p class="text-sm mt-2 text-muted">
+                                {{ edu.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section *ngIf="profile.experiences.length">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Experience</h2>
+                <div class="space-y-4">
+                    <div *ngFor="let exp of profile.experiences"
+                        class="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-muted rounded-lg bg-white shadow-sm">
+
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-strongText">
+                                {{ exp.jobTitle }} <span class="text-muted">– {{ exp.company }}</span>
+                            </h3>
+                            <p class="text-sm text-muted">
+                                {{ exp.startDate | date:'MMM d, yyyy' }} –
+                                {{ exp.endDate ? (exp.endDate | date:'MMM d, yyyy') : 'Present' }} | {{ exp.location }}
+                            </p>
+                            <p class="text-sm mt-2 text-muted">
+                                {{ exp.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section *ngIf="profile.certifications.length">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Certifications</h2>
+                <div class="space-y-4">
+                    <div *ngFor="let cert of profile.certifications"
+                        class="p-4 border border-muted rounded-lg bg-white shadow-sm">
+                        <h3 class="text-lg font-semibold text-strongText">
+                            {{ cert.certificationName }}
+                        </h3>
+                        <p class="text-sm text-muted">
+                            {{ cert.institution }}
+                        </p>
+                        <p class="text-sm text-muted">
+                            Obtained: {{ cert.dateObtained | date:'MMM d, yyyy' }}
+                            <span *ngIf="cert.expirationDate">
+                                | Expires: {{ cert.expirationDate | date:'MMM d, yyyy' }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section *ngIf="profile.projects.length">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Projects</h2>
+                <div class="space-y-4">
+                    <div *ngFor="let project of profile.projects"
+                        class="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-muted rounded-lg bg-white shadow-sm">
+
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-strongText">
+                                <a *ngIf="project.link" [href]="project.link" target="_blank" rel="noopener noreferrer"
+                                    class="hover:underline text-primary">{{ project.title }}</a>
+                                <span *ngIf="!project.link">{{ project.title }}</span>
+                            </h3>
+                            <p class="text-sm text-muted">
+                                {{ project.startDate | date:'MMM d, yyyy' }} –
+                                {{ project.endDate | date:'MMM d, yyyy' }}
+                            </p>
+                            <p class="text-sm mt-2 text-muted">{{ project.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section *ngIf="profile.languages.length">
+                <h2 class="text-2xl font-semibold text-primary mb-6">Languages</h2>
+                <ul class="flex flex-wrap gap-3">
+                    <li *ngFor="let lang of profile.languages"
+                        class="skill-item flex items-center gap-3 border border-muted bg-white px-4 py-2 rounded-full shadow-sm"
+                        [style.--hover-fill-color]="getLanguageLevelHexColor(lang.level)">
+                        <div class="skill-content">
+                            <span class="text-sm font-medium text-strongText">{{ lang.name }}</span>
+                            <span
+                                [ngClass]="getLanguageLevelColor(lang.level) + ' text-white text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm'">
+                                {{ getLanguageLevelName(lang.level) }}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+
+
+            <section *ngIf="profile.hardSkills.length">
+                <h2 class="text-2xl font-semibold text-primary mb-6">Hard Skills</h2>
+                <ul class="flex flex-wrap gap-3">
+                    <li *ngFor="let skill of profile.hardSkills"
+                        class="skill-item flex items-center gap-3 border border-muted bg-white px-4 py-2 rounded-full shadow-sm"
+                        [ngStyle]="{'--hover-fill-color': getSkillLevelHexColor(skill.level)}">
+                        <div class="skill-content">
+                            <img *ngIf="skill.logo" [src]="skill.logo" alt="{{ skill.name }} logo"
+                                class="w-5 h-5 object-contain rounded" />
+                            <span class="text-sm font-medium text-strongText">{{ skill.name }}</span>
+                            <span
+                                [ngClass]="getSkillLevelColor(skill.level) + ' text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm cursor-default relative group'">
+                                Level {{ skill.level }}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section *ngIf="profile.softSkills.length">
+                <h2 class="text-2xl font-semibold text-primary mb-6">Soft Skills</h2>
+                <ul class="flex flex-wrap gap-3">
+                    <li *ngFor="let skill of profile.softSkills"
+                        class="skill-item flex items-center gap-3 border border-muted bg-white px-4 py-2 rounded-full shadow-sm"
+                        [ngStyle]="{'--hover-fill-color': getSkillLevelHexColor(skill.level)}">
+                        <div class="skill-content">
+                            <span class="text-sm font-medium text-strongText">{{ skill.name }}</span>
+                            <span
+                                [ngClass]="getSkillLevelColor(skill.level) + ' text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm cursor-default relative group'">
+                                Level {{ skill.level }}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+
+            <section *ngIf="profile.interests.length">
+                <h2 class="text-2xl font-semibold text-primary mb-6">Interests</h2>
+                <ul class="flex flex-wrap gap-3">
+                    <li *ngFor="let interest of profile.interests"
+                        class="flex items-center justify-center border border-muted bg-white text-muted px-4 py-2 rounded-full shadow-sm text-sm font-medium cursor-default select-none">
+                        {{ interest.interest }}
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+
+    </div>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>
+
+<div *ngIf="!isLoggedIn"> You should be logged in to access your profile </div>

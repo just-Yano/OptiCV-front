@@ -9,14 +9,16 @@ import { Language } from '../../interfaces/language';
 import { Project } from '../../interfaces/project';
 import { Interest } from '../../interfaces/interest';
 import { ContactInfo } from '../../interfaces/contact-info';
+import { AuthService } from '../services//authentication/auth.service';
 
 @Component({
   selector: 'app-add-section',
-  imports: [],
   templateUrl: './add-section.component.html',
-  styleUrl: './add-section.component.css'
+  styleUrls: ['./add-section.component.css']
 })
 export class AddSectionComponent {
+  constructor(private authService: AuthService) {}
+  
   @Input() cvTemplateId: number = -1;
   cv: CV = {
     education: [],
@@ -77,9 +79,12 @@ export class AddSectionComponent {
     console.log("Preparing to send CV to backend...");
     console.log(cv);
 
+    // Get user email from AuthService
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       templateId: cvTemplateId,
-      userEmail: "daniel@opti.com",
+      userEmail: userEmail,
       educations: cv.education,
       experiences: cv.experience,
       hardSkills: cv.hardSkills,
@@ -122,10 +127,12 @@ export class AddSectionComponent {
     const skillName = (document.getElementById('hardSkillName') as HTMLInputElement).value;
     const skillLevel = (document.getElementById('hardSkillLevel') as HTMLInputElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       hardSkillName: skillName,
       level: skillLevel,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/hard-skills/add', {
@@ -169,6 +176,9 @@ export class AddSectionComponent {
     const gitHub = (document.getElementById('contactGitHub') as HTMLInputElement).value;
     const website = (document.getElementById('contactWebsite') as HTMLInputElement).value;
     const description = (document.getElementById('contactDescription') as HTMLTextAreaElement).value;
+
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       name: name,
       email: email,
@@ -178,7 +188,7 @@ export class AddSectionComponent {
       github: gitHub,
       website: website,
       description: description,
-      senderEmail: "daniel@opti.com"
+      senderEmail: userEmail
     };
 
     fetch('http://localhost:8080/api/contactInfo/add', {
@@ -219,9 +229,11 @@ export class AddSectionComponent {
   addSummary() {
     const summary = (document.getElementById('summaryText') as HTMLTextAreaElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       summary: summary,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/summary/add', {
@@ -254,6 +266,8 @@ export class AddSectionComponent {
     const description = (document.getElementById('educationDescription') as HTMLInputElement).value;
     const logo = (document.getElementById('educationLogo') as HTMLInputElement).value;
     const location = (document.getElementById('educationLocation') as HTMLInputElement).value;
+
+    const userEmail = this.authService.getEmail();
     
     const requestBody = {
       degree: title,
@@ -263,7 +277,7 @@ export class AddSectionComponent {
       location: location,
       description: description,
       logo: logo,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/education/add', {
@@ -307,6 +321,8 @@ export class AddSectionComponent {
     const location = (document.getElementById('experienceLocation') as HTMLInputElement).value;
     const description = (document.getElementById('experienceDescription') as HTMLTextAreaElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       jobTitle: title,
       company: company,
@@ -314,7 +330,7 @@ export class AddSectionComponent {
       endDate: endDate,
       location: location,
       description: description,
-      senderEmail: "daniel@opti.com",
+      senderEmail: userEmail,
       logo: null // Assuming logo is not provided in the UI
     };
 
@@ -361,12 +377,14 @@ export class AddSectionComponent {
     const dateObtained = (document.getElementById('certificationDateObtained') as HTMLInputElement).value;
     const expirationDate = (document.getElementById('certificationExpirationDate') as HTMLInputElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       name: name,
       institution: institution,
       dateObtained: dateObtained,
       expirationDate: expirationDate,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/certification/add', {
@@ -405,13 +423,15 @@ export class AddSectionComponent {
     const startDate = (document.getElementById('projectStartDate') as HTMLInputElement).value;
     const endDate = (document.getElementById('projectEndDate') as HTMLInputElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       title: title,
       description: description,
       link: link,
       startDate: startDate,
       endDate: endDate,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/project/add', {
@@ -449,10 +469,12 @@ export class AddSectionComponent {
     const skillName = (document.getElementById('softSkillName') as HTMLInputElement).value;
     const skillLevel = (document.getElementById('softSkillLevel') as HTMLInputElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       name: skillName,
       level: skillLevel,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/soft-skills/add', {
@@ -487,10 +509,12 @@ export class AddSectionComponent {
     const languageName = (document.getElementById('languageName') as HTMLInputElement).value;
     const languageLevel = (document.getElementById('languageLevel') as HTMLInputElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       name: languageName,
       level: languageLevel,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/language/add', {
@@ -523,9 +547,11 @@ export class AddSectionComponent {
   addInterest() {
     const interestName = (document.getElementById('interestName') as HTMLInputElement).value;
 
+    const userEmail = this.authService.getEmail();
+
     const requestBody = {
       interest: interestName,
-      email: "daniel@opti.com"
+      email: userEmail
     };
 
     fetch('http://localhost:8080/api/interest/add', {
