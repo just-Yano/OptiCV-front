@@ -12,6 +12,7 @@ import { SoftSkill } from '../../interfaces/soft-skill';
 import { Language } from '../../interfaces/language';
 import { Interest } from '../../interfaces/interest';
 import { Summary } from '../../interfaces/summary';
+import { AuthService } from '../services/authentication/auth.service';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class ViewSectionComponent implements OnInit, OnChanges {
   @Input() showAddButton: boolean = false;
   @Input() userData: any = null; // Input parameter for userData
 
+  constructor(private authService: AuthService) {}
+
   contactInfo: ContactInfo[] = [];
   summary: Summary[] = [];
   experiences: Experience[] = [];
@@ -35,8 +38,17 @@ export class ViewSectionComponent implements OnInit, OnChanges {
   certifications: Certification[] = [];
   interests: Interest[] = [];
   
-  email = 'daniel@opti.com'
+  email: string = '';
+
   ngOnInit() {
+    this.email = this.authService.getEmail() ?? '';
+    
+    if (!this.email) {
+      console.error('Email is empty. Cannot fetch profile.');
+      return; // Stop further execution if email is empty
+    }
+    console.log('Email:', this.email); // Debug print
+
     // If userData is not passed, fetch it from the API
     if (!this.userData) {
       console.log('userData not passed, fetching from API...');
@@ -325,7 +337,193 @@ export class ViewSectionComponent implements OnInit, OnChanges {
   }
 
 
-  
-  
+  // Helper to close dialogs
+private closeDialog(id: string) {
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+  dlg?.close();
 }
 
+// 1) Education
+saveEducation(): void {
+  const id = 'modalEducation';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const degree      = dlg.querySelector<HTMLInputElement>('input[name="degree"]')!.value;
+  const school      = dlg.querySelector<HTMLInputElement>('input[name="school"]')!.value;
+  const startDate   = dlg.querySelector<HTMLInputElement>('input[name="startDate"]')!.value;
+  const endDate     = dlg.querySelector<HTMLInputElement>('input[name="endDate"]')!.value;
+  const location    = dlg.querySelector<HTMLInputElement>('input[name="location"]')!.value;
+  const description = dlg.querySelector<HTMLTextAreaElement>('textarea[name="description"]')!.value;
+  const logoFile    = dlg.querySelector<HTMLInputElement>('input[type="file"]')!.files?.[0]?.name || '';
+
+  const payload = { degree, school, startDate, endDate, location, description, logo: logoFile, email: this.email };
+
+  fetch('http://localhost:8080/api/education/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Education add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 2) Experience
+saveExperience(): void {
+  const id = 'modalExperience';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const jobTitle    = dlg.querySelector<HTMLInputElement>('input[name="jobTitle"]')!.value;
+  const company     = dlg.querySelector<HTMLInputElement>('input[name="company"]')!.value;
+  const startDate   = dlg.querySelector<HTMLInputElement>('input[name="startDate"]')!.value;
+  const endDate     = dlg.querySelector<HTMLInputElement>('input[name="endDate"]')!.value;
+  const location    = dlg.querySelector<HTMLInputElement>('input[name="location"]')!.value;
+  const description = dlg.querySelector<HTMLTextAreaElement>('textarea[name="description"]')!.value;
+  const logoFile    = dlg.querySelector<HTMLInputElement>('input[type="file"]')!.files?.[0]?.name || '';
+
+  const payload = { jobTitle, company, startDate, endDate, location, description, logo: logoFile, senderEmail: this.email };
+
+  fetch('http://localhost:8080/api/experience/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Experience add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 3) Certification
+saveCertification(): void {
+  const id = 'modalCertification';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const certificationName = dlg.querySelector<HTMLInputElement>('input[name="certificationName"]')!.value;
+  const institution       = dlg.querySelector<HTMLInputElement>('input[name="institution"]')!.value;
+  const dateObtained      = dlg.querySelector<HTMLInputElement>('input[name="dateObtained"]')!.value;
+  const expirationDate    = dlg.querySelector<HTMLInputElement>('input[name="expirationDate"]')!.value;
+
+  const payload = { certificationName, institution, dateObtained, expirationDate, email: this.email };
+
+  fetch('http://localhost:8080/api/certification/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Certification add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 4) Project
+saveProject(): void {
+  const id = 'modalProject';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const title       = dlg.querySelector<HTMLInputElement>('input[name="projectTitle"]')!.value;
+  const description = dlg.querySelector<HTMLTextAreaElement>('textarea[name="description"]')!.value;
+  const projectLink = dlg.querySelector<HTMLInputElement>('input[name="projectLink"]')!.value;
+  const logoFile    = dlg.querySelector<HTMLInputElement>('input[type="file"]')!.files?.[0]?.name || '';
+  const startDate   = dlg.querySelector<HTMLInputElement>('input[name="startDate"]')!.value;
+  const endDate     = dlg.querySelector<HTMLInputElement>('input[name="endDate"]')!.value;
+
+  const payload = { title, description, link: projectLink, logo: logoFile, startDate, endDate, email: this.email };
+
+  fetch('http://localhost:8080/api/project/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Project add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 5) Hard Skill
+saveHardSkill(): void {
+  const id = 'modalHardSkill';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const hardSkillName  = dlg.querySelector<HTMLInputElement>('input[name="skillName"]')!.value;
+  const level = +dlg.querySelector<HTMLInputElement>('input[name="skillLevel"]')!.value;
+
+  const payload = { hardSkillName, level, email: this.email };
+
+  fetch('http://localhost:8080/api/hard-skills/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Hard skill add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 6) Soft Skill
+saveSoftSkill(): void {
+  const id = 'modalSoftSkill';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const name  = dlg.querySelector<HTMLInputElement>('input[name="skillName"]')!.value;
+  const level = +dlg.querySelector<HTMLInputElement>('input[name="skillLevel"]')!.value;
+
+  const payload = { name, level, email: this.email };
+
+  fetch('http://localhost:8080/api/soft-skills/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Soft skill add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 7) Language
+saveLanguage(): void {
+  const id = 'modalLanguage';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const name  = dlg.querySelector<HTMLInputElement>('input[name="languageName"]')!.value;
+  const level = +dlg.querySelector<HTMLInputElement>('input[name="languageLevel"]')!.value;
+
+  const payload = { name, level, email: this.email };
+
+  fetch('http://localhost:8080/api/language/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Language add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+// 8) Interest
+saveInterest(): void {
+  const id = 'modalInterest';
+  const dlg = document.getElementById(id) as HTMLDialogElement;
+
+  const interest = dlg.querySelector<HTMLInputElement>('input[name="interestName"]')!.value;
+
+  const payload = { interest, email: this.email };
+
+  fetch('http://localhost:8080/api/interest/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(() => this.fetchProfile(this.email))
+    .catch(err => console.error('Interest add error:', err))
+    .finally(() => this.closeDialog(id));
+}
+
+}
