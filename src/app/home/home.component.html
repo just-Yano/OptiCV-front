@@ -14,7 +14,7 @@
 
 <!-- CTA Cards Section -->
 <section class="max-w-5xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-6">
-  
+
   <!-- Card 1: Create Resume -->
   <div class="card bg-base-100 border border-gray-200 shadow-md transition hover:shadow-lg">
     <div class="card-body items-center text-center space-y-4">
@@ -23,11 +23,10 @@
         Don't have a resume yet? Use our builder to generate a professional one in minutes.
       </p>
       <!-- Button: Create My Resume -->
-<button
-class="btn btn-outline btn-wide hover:bg-primary hover:border-primary hover:text-white transition"
-(click)="navigateToCreation()">
-Create My Resume
-</button>
+      <button class="btn btn-outline btn-wide hover:bg-primary hover:border-primary hover:text-white transition"
+        (click)="navigateToCreation()">
+        Create My Resume
+      </button>
     </div>
   </div>
 
@@ -38,9 +37,8 @@ Create My Resume
       <p class="text-muted text-sm">
         Already have a resume? Adapt it to a job description with our tailoring tool.
       </p>
-      <button
-    class="btn btn-outline btn-wide hover:bg-primary hover:border-primary hover:text-white transition"
-    (click)="navigateToTailoring()">
+      <button class="btn btn-outline btn-wide hover:bg-primary hover:border-primary hover:text-white transition"
+        (click)="navigateToTailoring()">
         Tailor My Resume
       </button>
     </div>
@@ -53,133 +51,131 @@ Create My Resume
       <p class="text-muted text-sm">
         Upload your existing resume and receive a detailed score with actionable insights.
       </p>
-      <button
-        class="btn btn-outline btn-wide hover:bg-primary hover:border-primary hover:text-white transition"
+      <button class="btn btn-outline btn-wide hover:bg-primary hover:border-primary hover:text-white transition"
         (click)="navigateToEvaluation()">
         Evaluate My Resume
-    </button>
+      </button>
     </div>
   </div>
 </section>
 
 <!-- How OptiCV Works -->
 <section class="bg-base-100 py-24 px-6">
-    <div class="max-w-4xl mx-auto space-y-20 relative">
-  
-      <!-- Section title -->
-      <h2 class="text-4xl font-bold text-center text-strongText mb-10">
-        How OptiCV Works
-      </h2>
-  
-      
-      <!-- Step 1 -->
-      <div class="flex flex-col md:flex-row items-center gap-10 relative">
-        <div class="w-16 h-16 flex items-center justify-center text-3xl bg-primary text-white rounded-full shadow-md z-10">
-          📄
-        </div>
-        <div class="md:w-1/2 md:pl-6 text-center md:text-left">
-          <h3 class="text-2xl font-semibold text-strongText">Upload or Create</h3>
-          <p class="text-muted text-lg">
-            Start from scratch using our intuitive resume builder — or upload your existing PDF.  
-            OptiCV ensures your layout and structure match recruiter expectations from the start.
-          </p>
-        </div>
+  <div class="max-w-4xl mx-auto space-y-20 relative">
+
+    <!-- Section title -->
+    <h2 class="text-4xl font-bold text-center text-strongText mb-10">
+      How OptiCV Works
+    </h2>
+
+
+    <!-- Step 1 -->
+    <div class="flex flex-col md:flex-row items-center gap-10 relative">
+      <div
+        class="w-16 h-16 flex items-center justify-center text-3xl bg-primary text-white rounded-full shadow-md z-10">
+        📄
       </div>
-  
-      <!-- Step 2 -->
-      <div class="flex flex-col md:flex-row-reverse items-center gap-10 relative">
-        <div class="w-16 h-16 flex items-center justify-center text-3xl bg-primary text-white rounded-full shadow-md z-10">
-          🧠
-        </div>
-        <div class="md:w-1/2 md:pr-6 text-center md:text-right">
-          <h3 class="text-2xl font-semibold text-strongText">Get Your Score</h3>
-          <p class="text-muted text-lg">
-            Instantly evaluate your resume with scoring backed by real hiring criteria: ATS-readiness, clarity, voice, and impact.
-            No guessing — just actionable insights you can trust.
-          </p>
-        </div>
+      <div class="md:w-1/2 md:pl-6 text-center md:text-left">
+        <h3 class="text-2xl font-semibold text-strongText">Upload or Create</h3>
+        <p class="text-muted text-lg">
+          Start from scratch using our intuitive resume builder — or upload your existing PDF.
+          OptiCV ensures your layout and structure match recruiter expectations from the start.
+        </p>
       </div>
-  
-      <!-- Step 3 -->
-      <div class="flex flex-col md:flex-row items-center gap-10 relative">
-        <div class="w-16 h-16 flex items-center justify-center text-3xl bg-primary text-white rounded-full shadow-md z-10">
-          🚀
-        </div>
-        <div class="md:w-1/2 md:pl-6 text-center md:text-left">
-          <h3 class="text-2xl font-semibold text-strongText">Tailor & Export</h3>
-          <p class="text-muted text-lg">
-            Use our built-in tailoring tool to align your resume with any job description.  
-            Improve your chances of getting noticed — and download your new resume in seconds.
-          </p>
-        </div>
-      </div>
-  
     </div>
-  </section>
-  
-  <!-- Testimonials Section -->
+
+    <!-- Step 2 -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-10 relative">
+      <div
+        class="w-16 h-16 flex items-center justify-center text-3xl bg-primary text-white rounded-full shadow-md z-10">
+        🧠
+      </div>
+      <div class="md:w-1/2 md:pr-6 text-center md:text-right">
+        <h3 class="text-2xl font-semibold text-strongText">Get Your Score</h3>
+        <p class="text-muted text-lg">
+          Instantly evaluate your resume with scoring backed by real hiring criteria: ATS-readiness, clarity, voice, and
+          impact.
+          No guessing — just actionable insights you can trust.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="flex flex-col md:flex-row items-center gap-10 relative">
+      <div
+        class="w-16 h-16 flex items-center justify-center text-3xl bg-primary text-white rounded-full shadow-md z-10">
+        🚀
+      </div>
+      <div class="md:w-1/2 md:pl-6 text-center md:text-left">
+        <h3 class="text-2xl font-semibold text-strongText">Tailor & Export</h3>
+        <p class="text-muted text-lg">
+          Use our built-in tailoring tool to align your resume with any job description.
+          Improve your chances of getting noticed — and download your new resume in seconds.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Testimonials Section -->
 <section class="bg-base-100 py-24 px-6 text-center">
-    <div class="max-w-6xl mx-auto space-y-10">
-      <h2 class="text-4xl font-bold text-strongText">What Users Are Saying</h2>
-  
-      <!-- Testimonial Carousel (3 visible at a time) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-500">
-        <ng-container *ngFor="let testimonial of currentGroup">
-          <div class="card bg-base-100 shadow-md border border-gray-200 p-6 space-y-4">
-            <p class="text-lg text-gray-700 italic">
-              “{{ testimonial.text }}”
-            </p>
-            <div class="flex items-center justify-center gap-4 pt-2">
-              <img [src]="testimonial.avatar" class="w-12 h-12 rounded-full" />
-              <div class="text-left">
-                <p class="font-semibold text-strongText">{{ testimonial.name }}</p>
-                <p class="text-muted text-sm">{{ testimonial.role }}</p>
-              </div>
+  <div class="max-w-6xl mx-auto space-y-10">
+    <h2 class="text-4xl font-bold text-strongText">What Users Are Saying</h2>
+
+    <!-- Testimonial Carousel (3 visible at a time) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-500">
+      <ng-container *ngFor="let testimonial of currentGroup">
+        <div class="card bg-base-100 shadow-md border border-gray-200 p-6 space-y-4">
+          <p class="text-lg text-gray-700 italic">
+            “{{ testimonial.text }}”
+          </p>
+          <div class="flex items-center justify-center gap-4 pt-2">
+            <img [src]="testimonial.avatar" class="w-12 h-12 rounded-full" />
+            <div class="text-left">
+              <p class="font-semibold text-strongText">{{ testimonial.name }}</p>
+              <p class="text-muted text-sm">{{ testimonial.role }}</p>
             </div>
           </div>
-        </ng-container>
-      </div>
-  
-      <!-- Navigation -->
-      <div class="flex justify-center gap-4 pt-6">
-        <button class="btn btn-sm btn-outline" (click)="prevGroup()">❮</button>
-        <button class="btn btn-sm btn-outline" (click)="nextGroup()">❯</button>
-      </div>
+        </div>
+      </ng-container>
     </div>
-  </section>
 
-  <!-- Final CTA Section -->
-<section class="bg-base-200 py-24 px-6 text-center">
-    <div class="max-w-3xl mx-auto space-y-6">
-      <h2 class="text-4xl font-bold text-strongText">
-        Ready to build your resume the right way?
-      </h2>
-      <p class="text-muted text-lg">
-        Start from scratch, improve what you have, or tailor your resume to land the job you want — all in one place.
-      </p>
-  
-      <!-- CTA Buttons -->
-      <div class="flex flex-col md:flex-row justify-center gap-4 pt-4">
-        <button
-          class="btn btn-primary btn-lg min-w-[180px]"
-          (click)="navigateToCreation()"
-        >
-          Create My Resume
-        </button>
-        <button
-          class="btn btn-outline btn-lg min-w-[180px] hover:bg-primary hover:text-white hover:border-primary transition"
-          (click)="navigateToEvaluation()"
-        >
-          Evaluate My Resume
-        </button>
-        <button
-          class="btn btn-outline btn-lg min-w-[180px] hover:bg-primary hover:text-white hover:border-primary transition"
-          (click)="navigateToTailoring()"
-        >
-          Tailor My Resume
-        </button>
-      </div>
+    <!-- Navigation -->
+    <div class="flex justify-center gap-4 pt-6">
+      <button class="btn btn-sm btn-outline" (click)="prevGroup()">❮</button>
+      <button class="btn btn-sm btn-outline" (click)="nextGroup()">❯</button>
     </div>
-  </section>
-  
-  
+  </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="bg-base-200 py-24 px-6 text-center">
+  <div class="max-w-3xl mx-auto space-y-6">
+    <h2 class="text-4xl font-bold text-strongText">
+      Ready to build your resume the right way?
+    </h2>
+    <p class="text-muted text-lg">
+      Start from scratch, improve what you have, or tailor your resume to land the job you want — all in one place.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col md:flex-row justify-center gap-4 pt-4">
+      <button class="btn btn-primary btn-lg min-w-[180px]" (click)="navigateToCreation()">
+        Create My Resume
+      </button>
+      <button
+        class="btn btn-outline btn-lg min-w-[180px] hover:bg-primary hover:text-white hover:border-primary transition"
+        (click)="navigateToEvaluation()">
+        Evaluate My Resume
+      </button>
+      <button
+        class="btn btn-outline btn-lg min-w-[180px] hover:bg-primary hover:text-white hover:border-primary transition"
+        (click)="navigateToTailoring()">
+        Tailor My Resume
+      </button>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

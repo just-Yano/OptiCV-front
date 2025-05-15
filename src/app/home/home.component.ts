@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, FooterComponent],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   testimonials = [

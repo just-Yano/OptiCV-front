@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { ScoreSectionComponent } from '../score-section/score-section.component';
 import { LoadingModalComponent } from '../shared/loading-modal/loading-modal.component';
-
+import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-evaluate',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, ScoreSectionComponent, LoadingModalComponent],
+  imports: [CommonModule, HeaderComponent, ScoreSectionComponent, LoadingModalComponent, FooterComponent],
   templateUrl: './evaluate.component.html',
   styleUrls: ['./evaluate.component.css']
 })
