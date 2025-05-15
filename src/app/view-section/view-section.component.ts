@@ -44,26 +44,26 @@ export class ViewSectionComponent implements OnInit, OnChanges {
     }
 
     // set contact info
-    fetch('http://localhost:8080/api/user/getProfile', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email: this.email }),
-  })
-    .then(response => {
-      console.log('Response:', response);
-      if (!response.ok) {
-        throw new Error('Failed to fetch profile');
-      }
-      return response.json();
+    fetch(`http://localhost:8080/api/user/getProfile?mail=${encodeURIComponent(this.email)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    .then((data: GetProfilResponse) => {
-      this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
-    })
-    .catch(error => {
-      console.error('Error fetching profile:', error);
-    });
+      .then(response => {
+        console.log('Response:', response);
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile');
+        }
+        return response.json();
+      })
+      .then((data: GetProfilResponse) => {
+        console.log('Profile data:', data); // Debug print
+        this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
+      })
+      .catch(error => {
+        console.error('Error fetching profile:', error);
+      });
 
   }
 
