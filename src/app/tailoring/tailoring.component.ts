@@ -63,7 +63,7 @@ export class TailoringComponent implements OnInit {
     if (email) {
       this.fetchProfile(email);
     }
-
+    
   }
 
   fetchProfile(email: string) {

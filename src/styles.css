@@ -2,14 +2,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-:root {
-  --color-primary: #A1B5D8;      /* Blue */
-  --color-muted: #738290;        /* Gray */
-  --color-background: #FFFCF7;   /* Cream */
-  --color-accent-green: #E4F0D0; /* Light Green */
-  --color-accent-olive: #C2D8B9; /* Pale Olive */
-  --color-strong-text: #2C2F36;  /* Strong Dark Gray */
-}
+
 @layer utilities {
   .animate-fade-in {
     animation: fadeIn 0.4s ease-out forwards;
@@ -52,6 +45,21 @@
       left: 100%;
     }
   }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
 }
 
 

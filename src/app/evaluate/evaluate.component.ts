@@ -1,23 +1,26 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
+import { CommonModule } from '@angular/common';
 import { ScoreCV } from '../../interfaces/score-cv';
-import { ScoreSectionComponent } from '../score-section/score-section.component';
 import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
+import { ScoreSectionComponent } from '../score-section/score-section.component';
 import { LoadingModalComponent } from '../shared/loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-evaluate',
   standalone: true,
-  imports: [HeaderComponent, ScoreSectionComponent, CommonModule, LoadingModalComponent],
+  imports: [CommonModule, HeaderComponent, ScoreSectionComponent, LoadingModalComponent],
   templateUrl: './evaluate.component.html',
-  styleUrl: './evaluate.component.css'
+  styleUrls: ['./evaluate.component.css']
 })
 export class EvaluateComponent {
   public score: ScoreCV | null = null;
   public isLoggedIn: boolean = false;
   public loading: boolean = false;
+  public selectedFile: File | null = null;
+  public selectedFileName: string = '';
+  public isDragging: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -31,45 +34,68 @@ export class EvaluateComponent {
     }
   }
 
-  evaluateCV(fileInput: HTMLInputElement) {
-    const file = fileInput.files?.[0];
+  onFileSelected(input: HTMLInputElement) {
+    const file = input.files?.[0];
+    if (!file) return;
 
-    if (!file) {
-      console.warn('No file selected');
+    if (file.type !== 'application/pdf' || file.size > 2 * 1024 * 1024) {
+      alert('Veuillez sélectionner un fichier PDF valide de moins de 2 Mo.');
+      this.selectedFile = null;
+      this.selectedFileName = '';
       return;
     }
 
-    if (file.type !== 'application/pdf') {
-      console.warn('Please upload a PDF file');
+    this.selectedFile = file;
+    this.selectedFileName = file.name;
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    const file = event.dataTransfer?.files?.[0];
+
+    if (!file || file.type !== 'application/pdf' || file.size > 2 * 1024 * 1024) {
+      alert('Veuillez déposer un fichier PDF valide de moins de 2 Mo.');
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      console.warn('File exceeds 2MB');
-      return;
-    }
+    this.selectedFile = file;
+    this.selectedFileName = file.name;
+  }
+
+  evaluateCV() {
+    if (!this.selectedFile) return;
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', this.selectedFile);
 
     this.loading = true;
     this.score = null;
 
     fetch('http://localhost:8080/api/cv-score/evaluate-pdf', {
       method: 'POST',
-      body: formData,
+      body: formData
     })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to evaluate CV');
-        }
+        if (!response.ok) throw new Error('Erreur lors de l’analyse du CV.');
         return response.json();
       })
       .then((data: ScoreCV) => {
         this.score = data;
       })
       .catch(error => {
-        console.error('Error evaluating CV:', error);
+        console.error('Erreur:', error);
+        alert('Impossible d’analyser le CV. Veuillez réessayer.');
       })
       .finally(() => {
         this.loading = false;
