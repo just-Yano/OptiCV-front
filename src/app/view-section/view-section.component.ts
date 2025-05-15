@@ -136,9 +136,52 @@ export class ViewSectionComponent implements OnInit, OnChanges {
       });
   }
 
+  modifyExperience(experience: Experience) {
+    const payload = {
+      experienceID: experience.id,
+      jobTitle: experience.jobTitle,
+      company: experience.company,
+      startDate: experience.startDate,
+      endDate: experience.endDate,
+      location: experience.location,
+      description: experience.description,
+      logo: experience.logo,
+      senderEmail: this.email
+    };
 
+    fetch('http://localhost:8080/api/experience/edit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(() => this.fetchProfile(this.email))
+      .catch(err => console.error('Experience modify error:', err));
+  }
 
+  modifyContactInfo(contactInfo: ContactInfo) {
+    const payload = {
+      name: contactInfo.name,
+      email: contactInfo.email,
+      phone: contactInfo.phone,
+      address: contactInfo.address,
+      linkedIn: contactInfo.linkedIn,
+      github: contactInfo.github,
+      website: contactInfo.website,
+      photo: contactInfo.photo,
+      description: contactInfo.description,
+      id: contactInfo.id,
+    };
 
+    fetch('http://localhost:8080/api/contactInfo/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(() => this.fetchProfile(this.email))
+      .catch(err => console.error('Contact modify error:', err));
+  }
 
   // “selected” holders for each section:
   selectedContact: any = null;
@@ -161,7 +204,37 @@ export class ViewSectionComponent implements OnInit, OnChanges {
     const idx = this.contactInfo.findIndex(c => c.email === this.selectedContact.email);
     if (idx !== -1) this.contactInfo[idx] = { ...this.selectedContact };
     (document.getElementById('modalContactModify') as HTMLDialogElement).close();
+
+
+    const id = 'modalContactModify';
+    const dlg = document.getElementById(id) as HTMLDialogElement;
+
+    const name        = dlg.querySelector<HTMLInputElement>('input[name="name"]')!.value;
+    const email       = dlg.querySelector<HTMLInputElement>('input[name="email"]')!.value;
+    const phone       = dlg.querySelector<HTMLInputElement>('input[name="phone"]')!.value;
+    const address     = dlg.querySelector<HTMLInputElement>('input[name="address"]')!.value;
+    const linkedIn    = dlg.querySelector<HTMLInputElement>('input[name="linkedIn"]')!.value;
+    const github      = dlg.querySelector<HTMLInputElement>('input[name="github"]')!.value;
+    const website     = dlg.querySelector<HTMLInputElement>('input[name="website"]')!.value;
+    const photo       = '';
+    const description = dlg.querySelector<HTMLTextAreaElement>('textarea[name="description"]')?.value || '';
+
+    this.selectedContact = {
+      name,
+      email,
+      phone,
+      address,
+      linkedIn,
+      github,
+      website,
+      photo,
+      description,
+      id: this.selectedContact.id
+    };
+
+    this.modifyContactInfo(this.selectedContact);
   }
+
   closeModifyContactModal() {
     const modal = document.getElementById('modalContactModify') as HTMLDialogElement;
     modal.close();
@@ -212,6 +285,34 @@ export class ViewSectionComponent implements OnInit, OnChanges {
     const idx = this.experiences.findIndex(e => e.id === this.selectedExperience.id);
     if (idx !== -1) this.experiences[idx] = { ...this.selectedExperience };
     (document.getElementById('modalExperienceModify') as HTMLDialogElement).close();
+
+
+    const id = 'modalExperienceModify';
+    const dlg = document.getElementById(id) as HTMLDialogElement;
+
+    const jobTitle    = dlg.querySelector<HTMLInputElement>('input[name="jobTitle"]')!.value;
+    const company     = dlg.querySelector<HTMLInputElement>('input[name="company"]')!.value;
+    const startDate   = dlg.querySelector<HTMLInputElement>('input[name="startDate"]')!.value;
+    const endDate     = dlg.querySelector<HTMLInputElement>('input[name="endDate"]')!.value;
+    const location    = dlg.querySelector<HTMLInputElement>('input[name="location"]')!.value;
+    const description = dlg.querySelector<HTMLTextAreaElement>('textarea[name="description"]')!.value;
+    const logoFile    =  '';
+
+    console.log('Selected Experience:', this.selectedExperience);
+    console.log('Selected Experienceid:', this.selectedExperience.id);
+
+    const experience: Experience = {
+      jobTitle,
+      company,
+      startDate,
+      endDate,
+      location,
+      description,
+      logo: logoFile,
+      id: this.selectedExperience.id
+    };
+
+    this.modifyExperience(experience);
   }
   closeModifyExperienceModal() {
     const modal = document.getElementById('modalExperienceModify') as HTMLDialogElement;
