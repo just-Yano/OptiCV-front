@@ -4,6 +4,8 @@ import { ViewSectionComponent } from '../view-section/view-section.component';
 import { TailoringResultComponent } from '../tailoring-result/tailoring-result.component';
 import { HeaderComponent } from '../header/header.component';
 import { Template } from '../../interfaces/template';
+import { AuthService } from '../services/authentication/auth.service';
+import { Router } from '@angular/router';
 
 interface TailorRequest {
   userData: any;
@@ -34,8 +36,9 @@ export class TailoringComponent implements OnInit {
   tailoringComment: string | null = null;
   userDataPdf: any;
   isTailoringComplete: boolean = false;
+  isLoggedIn: boolean = false;
 
-  constructor() {
+  constructor(private authService: AuthService, private router: Router) {
     this.userData = {
       experiences: [],
       education: [],
@@ -48,10 +51,19 @@ export class TailoringComponent implements OnInit {
       contactInfo: {},
       summary: ''
     };
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
     ngOnInit() {
-    const email = 'daniel@opti.com';
-    this.fetchProfile(email);
+      if (!this.isLoggedIn) {
+      setTimeout(() => {
+      this.router.navigate(['/login']);}
+      , 5000);
+    }
+    const email = this.authService.getEmail();
+    if (email) {
+      this.fetchProfile(email);
+    }
+
   }
 
   fetchProfile(email: string) {
