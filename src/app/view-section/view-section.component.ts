@@ -40,38 +40,38 @@ export class ViewSectionComponent {
   }
 
   fetchProfile(email: string) {
-  fetch('http://localhost:8080/api/user/getProfile', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  })
-    .then(response => {
-      console.log('Response:', response);
-      if (!response.ok) {
-        throw new Error('Failed to fetch profile');
-      }
-      return response.json();
+    fetch(`http://localhost:8080/api/user/getProfile?mail=${encodeURIComponent(email)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    .then((data: GetProfilResponse) => {
-      console.log('Profile data:', data); // Debug print
+      .then(response => {
+        console.log('Response:', response);
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile');
+        }
+        return response.json();
+      })
+      .then((data: GetProfilResponse) => {
+        console.log('Profile data:', data); // Debug print
 
-      this.educations = data.educations || [];
-      this.experiences = data.experiences || [];
-      this.hardSkills = data.hardSkills || [];
-      this.softSkills = data.softSkills || [];
-      this.projects = data.projects || [];
-      this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
-      this.summary = data.summary ? [data.summary] : [];
-      this.languages = data.languages || [];
-      this.certifications = data.certifications || [];
-      this.interests = data.interests || [];
-    })
-    .catch(error => {
-      console.error('Error fetching profile:', error);
-    });
-}
+        this.educations = data.educations || [];
+        this.experiences = data.experiences || [];
+        this.hardSkills = data.hardSkills || [];
+        this.softSkills = data.softSkills || [];
+        this.projects = data.projects || [];
+        this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
+        this.summary = data.summary ? [data.summary] : [];
+        this.languages = data.languages || [];
+        this.certifications = data.certifications || [];
+        this.interests = data.interests || [];
+      })
+      .catch(error => {
+        console.error('Error fetching profile:', error);
+      });
+  }
+
 
 
 
