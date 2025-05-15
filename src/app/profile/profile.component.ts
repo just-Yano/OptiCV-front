@@ -153,4 +153,8 @@ cancelChanges() {
   this.editProfile();
 }
 
+// TODO implement the add, edit and delete methods for each section
+editEducation(index: number) {}
+deleteEducation(index: number) {}
+addEducation() {}
 }
