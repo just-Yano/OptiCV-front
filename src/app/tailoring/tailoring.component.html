@@ -30,7 +30,7 @@
 <div *ngIf="buttonClicked">
     <div class="flex h-dvh pt-10 px-10 gap-8">
         <div class="w-full">
-            <app-tailoring-result [tailoringComment]="tailoringComment" [userData]="userData" (templateSelected)="onTemplateSelected($event)"></app-tailoring-result>
+            <app-tailoring-result *ngIf="isTailoringComplete" [tailoringComment]="tailoringComment" [userData]="userData" (templateSelected)="onTemplateSelected($event)"></app-tailoring-result>
         </div>
     </div>
 </div>

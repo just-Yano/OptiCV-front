@@ -33,6 +33,7 @@ export class TailoringComponent implements OnInit {
   userId = -1;
   tailoringComment: string | null = null;
   userDataPdf: any;
+  isTailoringComplete: boolean = false;
 
   constructor() {
     this.userData = {
@@ -91,6 +92,11 @@ export class TailoringComponent implements OnInit {
   }
 
   onTemplateSelected(template: Template) {
+    if(!this.isTailoringComplete) {
+      console.error('Tailoring is not complete. Cannot select template.');
+      return;
+    }
+    
     console.log('onTemplateSelected called with template:', template);
     this.selectedTemplateId = template.id;
     
@@ -189,11 +195,12 @@ export class TailoringComponent implements OnInit {
       console.log('User Data PDF:', this.userDataPdf);
 
       this.tailoringComment = data.tailoringComment;
-
+      this.isTailoringComplete = true; // Set the flag to true when tailoring is complete
       })
       .catch(error => {
         console.error('Error calling tailorCV:', error);
         this.errorMessage = 'Unable to tailor CV at this time.';
+        this.isTailoringComplete = false; // Set the flag to false if there's an error
       });
   }
 
