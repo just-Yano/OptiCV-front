@@ -6,10 +6,11 @@ import { TemplateSelectorComponent } from '../template-selector/template-selecto
 import { AddSectionComponent } from '../add-section/add-section.component';
 import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-creation',
-  imports: [HeaderComponent, CommonModule, TemplateSelectorComponent, AddSectionComponent],
+  imports: [HeaderComponent, CommonModule, TemplateSelectorComponent, AddSectionComponent, FooterComponent],
   templateUrl: './creation.component.html',
   styleUrl: './creation.component.css'
 })
@@ -66,6 +67,8 @@ export class CreationComponent {
 
   }
 
+
+  // TODO : check what to do 
   generate() {
 
     const latexCode = ``;  // TODO : get the final cv to download

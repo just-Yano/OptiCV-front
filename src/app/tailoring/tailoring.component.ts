@@ -6,6 +6,7 @@ import { HeaderComponent } from '../header/header.component';
 import { Template } from '../../interfaces/template';
 import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../footer/footer.component';
 
 interface TailorRequest {
   userData: any;
@@ -20,7 +21,7 @@ interface TailorResponse {
 @Component({
   selector: 'app-tailoring',
   standalone: true,
-  imports: [ViewSectionComponent, HeaderComponent, TailoringResultComponent, CommonModule],
+  imports: [ViewSectionComponent, HeaderComponent, TailoringResultComponent, CommonModule, FooterComponent],
   templateUrl: './tailoring.component.html',
   styleUrls: ['./tailoring.component.css']
 })
