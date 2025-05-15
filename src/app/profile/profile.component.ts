@@ -68,6 +68,10 @@ export class ProfileComponent {
         // binding the data to the profile component HTML
         console.log(data);
         this.profile = data;
+        this.profile.hardSkills = this.profile.hardSkills.sort((a, b) => a.level - b.level);
+        this.profile.softSkills = this.profile.softSkills.sort((a, b) => a.level - b.level);
+        this.profile.languages = this.profile.languages.sort((a, b) => a.level - b.level);
+        console.log(this.profile);
       }).catch(error => {
         this.errorMessage = error.message || 'An error occurred while fetching the profile';
         // Handle the error as needed, e.g., show an error message to the user        
