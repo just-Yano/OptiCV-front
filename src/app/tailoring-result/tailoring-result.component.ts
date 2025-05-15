@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemplateSelectorComponent } from '../template-selector/template-selector.component';
 import { ViewSectionComponent } from '../view-section/view-section.component';
@@ -11,6 +11,7 @@ import { Template } from '../../interfaces/template';
   styleUrl: './tailoring-result.component.css'
 })
 export class TailoringResultComponent {
+  @Input() userData: any; 
   @Output() templateSelected = new EventEmitter<Template>();
 
  templateChosen: boolean = false;

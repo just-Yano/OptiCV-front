@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GetProfilResponse } from '../../interfaces/GetProfilResponse';
@@ -20,8 +20,9 @@ import { Summary } from '../../interfaces/summary';
   templateUrl: './view-section.component.html',
   styleUrl: './view-section.component.css'
 })
-export class ViewSectionComponent {
+export class ViewSectionComponent implements OnInit, OnChanges {
   @Input() showAddButton: boolean = false;
+  @Input() userData: any = null; // Input parameter for userData
 
   contactInfo: ContactInfo[] = [];
   summary: Summary[] = [];
@@ -33,10 +34,61 @@ export class ViewSectionComponent {
   languages: Language[] = [];
   certifications: Certification[] = [];
   interests: Interest[] = [];
-
+  
+  email = 'daniel@opti.com'
   ngOnInit() {
-    const email = 'daniel@opti.com';
-    this.fetchProfile(email);
+    // If userData is not passed, fetch it from the API
+    if (!this.userData) {
+      console.log('userData not passed, fetching from API...');
+      this.fetchProfile(this.email);
+    }
+
+    // set contact info
+    fetch('http://localhost:8080/api/user/getProfile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email: this.email }),
+  })
+    .then(response => {
+      console.log('Response:', response);
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile');
+      }
+      return response.json();
+    })
+    .then((data: GetProfilResponse) => {
+      this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
+    })
+    .catch(error => {
+      console.error('Error fetching profile:', error);
+    });
+
+  }
+
+  ngOnChanges() {
+    // If userData is passed, process it
+    if (this.userData) {
+      console.log('Received userData as input:', this.userData);
+      this.processUserData(this.userData);
+    }
+  }
+
+  processUserData(data: any) {
+    // this.contactInfo = data.contactInfo ? [data.contactInfo] : [];
+  // Wrap the summary string in another object
+  this.summary = data.summary
+    ? [{ summary: data.summary.summary || data.summary }]
+    : [];
+    this.educations = data.education || [];
+    this.experiences = data.experiences || [];
+    this.hardSkills = data.hardSkills || [];
+    this.softSkills = data.softSkills || [];
+    this.projects = data.projects || [];
+    this.languages = data.languages || [];
+    this.certifications = data.certifications || [];
+    this.interests = data.interests || [];
   }
 
   fetchProfile(email: string) {

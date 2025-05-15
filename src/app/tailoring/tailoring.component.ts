@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewSectionComponent } from '../view-section/view-section.component';
 import { TailoringResultComponent } from '../tailoring-result/tailoring-result.component';
@@ -44,10 +44,49 @@ export class TailoringComponent {
       summary: ''
     };
   }
+    ngOnInit() {
+    const email = 'daniel@opti.com';
+    this.fetchProfile(email);
+  }
+
+  fetchProfile(email: string) {
+  fetch('http://localhost:8080/api/user/getProfile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+.then(data => {
+  this.userId = data.id;
+
+  this.userData = {
+
+    educations: data.educations || [],
+    experiences: data.experiences || [],
+    projects: data.projects || [],
+    softSkills: data.softSkills || [],
+    hardSkills: data.hardSkills || [],
+    certifications: data.certifications || [],
+    interests: data.interests?.map((i: { interest: any; }) => i.interest).filter(Boolean) || [],
+    languages: data.languages || [],
+    // your summary comes back wrapped in an object
+    summary: data.summary?.summary || '',
+    // if you need contactInfo downstream, you can pass it as well
+    contactInfo: data.contactInfo || {}
+  };
+
+    });
+  }
 
   onTemplateSelected(template: Template) {
     this.selectedTemplateId = template.id;
-    console.log('Selected template ID:', this.selectedTemplateId);
     
     // api call
     fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${this.userId}&cvTemplateId=${this.selectedTemplateId}`, {
@@ -64,6 +103,7 @@ export class TailoringComponent {
       return response.blob();
       })
       .then(blob => {
+          console.log('PDF Blob:', blob);
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
@@ -105,6 +145,24 @@ export class TailoringComponent {
       })
       .then(data => {
         this.tailorResponse = data;
+        console.log('Tailored CV:', data.tailoredCV);
+        console.log('Tailoring comment:', data.tailoringComment);
+        this.userData = {
+        // note: your backend uses "educations" not "education"
+        education: data.tailoredCV.educations || [],
+        experiences: data.tailoredCV.experiences || [],
+        projects: data.tailoredCV.projects || [],
+        softSkills: data.tailoredCV.softSkills || [],
+        hardSkills: data.tailoredCV.hardSkills || [],
+        certifications: data.tailoredCV.certifications || [],
+        interests: data.tailoredCV.interests?.map((i: { interest: any; }) => i.interest).filter(Boolean) || [],
+        languages: data.tailoredCV.languages || [],
+        // your summary comes back wrapped in an object
+        summary: data.tailoredCV.summary?.summary || '',
+        // if you need contactInfo downstream, you can pass it as well
+        contactInfo: data.tailoredCV.contactInfo || {}
+      };
+
       })
       .catch(error => {
         console.error('Error calling tailorCV:', error);
