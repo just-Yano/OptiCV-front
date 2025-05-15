@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewSectionComponent } from '../view-section/view-section.component';
 import { TailoringResultComponent } from '../tailoring-result/tailoring-result.component';
@@ -22,7 +22,8 @@ interface TailorResponse {
   templateUrl: './tailoring.component.html',
   styleUrls: ['./tailoring.component.css']
 })
-export class TailoringComponent {
+export class TailoringComponent implements OnInit {
+  @ViewChild(TailoringResultComponent) tailoringResultComponent!: TailoringResultComponent;
 
   buttonClicked = false;
   userData: any; // Your full CV JSON
@@ -31,6 +32,7 @@ export class TailoringComponent {
   selectedTemplateId: number | null = null;
   userId = -1;
   tailoringComment: string | null = null;
+  userDataPdf: any;
 
   constructor() {
     this.userData = {
@@ -42,6 +44,7 @@ export class TailoringComponent {
       certifications: [],
       interests: [],
       languages: [],
+      contactInfo: {},
       summary: ''
     };
   }
@@ -82,19 +85,41 @@ export class TailoringComponent {
     contactInfo: data.contactInfo || {}
   };
 
+  console.log('User Data on init:', this.userData);
+
     });
   }
 
   onTemplateSelected(template: Template) {
+    console.log('onTemplateSelected called with template:', template);
     this.selectedTemplateId = template.id;
     
+    console.log(this.userDataPdf);
+
+    const payload = {
+      educations: this.userDataPdf.education,
+      experiences: this.userDataPdf.experiences,
+      projects: this.userDataPdf.projects,
+      softSkills: this.userDataPdf.softSkills,
+      hardSkills: this.userDataPdf.hardSkills,
+      certifications: this.userDataPdf.certifications,
+      interests: this.userDataPdf.interests,
+      languages: this.userDataPdf.languages,
+      summary: this.userDataPdf.summary,
+      contactInfo: this.userData.contactInfo, // contact info stays from init
+      templateId: this.selectedTemplateId,
+    }
+
+    console.log('Payload for PDF generation:', payload);
+
+
     // api call
-    fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary?userId=${this.userId}&cvTemplateId=${this.selectedTemplateId}`, {
+    fetch(`http://localhost:8080/api/cvtemplate/fillTemplateTemporary`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(this.userData),
+    body: JSON.stringify(payload),
     })
     .then(response => {
       if (!response.ok) {
@@ -103,13 +128,9 @@ export class TailoringComponent {
       return response.blob();
       })
       .then(blob => {
-          console.log('PDF Blob:', blob);
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = "refresh.pdf";
-          a.click();
-          window.URL.revokeObjectURL(url);
+        const url = window.URL.createObjectURL(blob);
+        this.tailoringResultComponent.updateIframeSrc(url);
+
     })
     .catch(error => {
       console.error('Error:', error);
@@ -118,6 +139,7 @@ export class TailoringComponent {
   }
 
   startTailoring(): void {
+    console.log('Start tailoring button clicked');
     this.buttonClicked = true;
     this.errorMessage = null;
 
@@ -129,8 +151,6 @@ export class TailoringComponent {
       userData: this.userData,
       jobOffer: jobOffer
     };
-
-    console.log('Payload:', payload);
 
     fetch('http://localhost:8080/api/tailor/tailorCV', {
       method: 'POST',
@@ -159,11 +179,15 @@ export class TailoringComponent {
         certifications: data.tailoredCV.certifications || [],
         interests: data.tailoredCV.interests?.map((i: { interest: any; }) => i.interest).filter(Boolean) || [],
         languages: data.tailoredCV.languages || [],
+        // keep the same contact info
+        contactInfo: this.userData.contactInfo,
         // your summary comes back wrapped in an object
         summary: data.tailoredCV.summary?.summary || '',
-        // if you need contactInfo downstream, you can pass it as well
-        contactInfo: data.tailoredCV.contactInfo || {}
       };
+      console.log('User Data:', this.userData);
+      this.userDataPdf = this.userData;
+      console.log('User Data PDF:', this.userDataPdf);
+
       this.tailoringComment = data.tailoringComment;
 
       })
