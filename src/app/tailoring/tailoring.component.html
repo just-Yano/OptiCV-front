@@ -19,9 +19,9 @@
       </div>
 
       <!-- Right: view section -->
-      <div class="w-1/2">
+      <div class="w-1/2 overflow-y-auto h-[85vh] pr-2">
         <h2 class="text-2xl font-bold mb-6">View your Sections</h2>
-        <p class="text-sm text-gray-500 mb-4">Feel free to add or modify your sections </p>
+        <p class="text-sm text-gray-500 mb-4">Feel free to add or modify your sections</p>
         <app-view-section [showAddButton]="true"></app-view-section>
       </div>
     </div>
@@ -36,12 +36,10 @@
       </div>
     </div>
   </div>
-  <<<<<<< HEAD </div>
-
-    <div *ngIf="!isLoggedIn"> You should be logged in to tailor your CV </div>
-    <app-footer></app-footer>
-    =======
 </div>
+
+<div *ngIf="!isLoggedIn"> You should be logged in to tailor your CV </div>
+<app-footer></app-footer>
 
 <!-- Loading modal shown while API request is in progress -->
 <app-loading-modal *ngIf="loading" message="Analyzing the job offer and tailoring your resume...">
@@ -50,5 +48,3 @@
 <div *ngIf="!isLoggedIn" class="text-center text-red-500 mt-10">
   You should be logged in to tailor your CV
 </div>
-
->>>>>>> loading
