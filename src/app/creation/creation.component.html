@@ -5,12 +5,13 @@
         <app-template-selector (messageEvent)="receiveTemplate($event)" />
     </div>
 
-    <div class="flex h-dvh pt-10" *ngIf="templateChosen">
+    <!-- Add padding-bottom to the container -->
+    <div class="flex h-dvh pt-10 pb-10" *ngIf="templateChosen">
         <!-- Left: iframe -->
         <iframe src="" class="w-1/2 h-full pl-10"></iframe> <!-- TODO change the src -->
 
-        <!-- Right: app-add-section -->
-        <div class="w-1/2 pl-24">
+        <!-- Right: app-add-section with scrollbar -->
+        <div class="w-1/2 pl-24 overflow-y-auto max-h-[80vh] pr-2">
             <app-add-section [cvTemplateId]="template.id"></app-add-section>
         </div>
     </div>
