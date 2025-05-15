@@ -246,7 +246,7 @@
         <tbody>
           <ng-container *ngFor="let interest of interests; let last = last">
             <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyInterestModal(interest)">
-              <td class="py-3 px-4">{{ interest }}</td> <!-- Directly print the interest string -->
+              <td class="py-3 px-4">{{ interest.interest }}</td> <!-- Directly print the interest string -->
             </tr>
             <tr *ngIf="!last">
               <td class="h-0.5 bg-gray-200"></td>
