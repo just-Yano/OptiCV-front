@@ -163,6 +163,7 @@ export class ViewSectionComponent implements OnInit, OnChanges {
     const payload = {
       name: contactInfo.name,
       email: contactInfo.email,
+      senderEmail: this.email,
       phone: contactInfo.phone,
       address: contactInfo.address,
       linkedIn: contactInfo.linkedIn,
