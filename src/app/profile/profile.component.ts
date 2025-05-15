@@ -4,15 +4,17 @@ import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GetProfilResponse } from '../../interfaces/GetProfilResponse';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, HeaderComponent],
+  imports: [CommonModule, HeaderComponent, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+  public editorMode: boolean = false;
   public isLoggedIn: boolean = false;
   public errorMessage: string = '';
   public profile: GetProfilResponse  = {
@@ -68,6 +70,10 @@ export class ProfileComponent {
         // binding the data to the profile component HTML
         console.log(data);
         this.profile = data;
+        this.profile.hardSkills = this.profile.hardSkills.sort((a, b) => a.level - b.level);
+        this.profile.softSkills = this.profile.softSkills.sort((a, b) => a.level - b.level);
+        this.profile.languages = this.profile.languages.sort((a, b) => a.level - b.level);
+        console.log(this.profile);
       }).catch(error => {
         this.errorMessage = error.message || 'An error occurred while fetching the profile';
         // Handle the error as needed, e.g., show an error message to the user        
@@ -136,5 +142,19 @@ getLanguageLevelHexColor(level: number): string {
   return '#9CA3AF';                   // gray-400 fallback (Unknown)
 }
 
+editProfile() {
+  this.editorMode = !this.editorMode; 
+}
 
+saveChanges() {
+  this.editProfile(); 
+} 
+cancelChanges() {
+  this.editProfile();
+}
+
+// TODO implement the add, edit and delete methods for each section
+editEducation(index: number) {}
+deleteEducation(index: number) {}
+addEducation() {}
 }
