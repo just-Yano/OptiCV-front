@@ -58,7 +58,8 @@ export class RegisterComponent {
         return response.json();
       })
       .then(data => {
-        this.aut.login(data.token);
+        // Handle the success case
+        this.aut.login(data.token, formData.email); // TODO remove the email and keep the token only
         this.successMessage = '🎉 Votre compte a été créé avec succès !';
         registerForm.reset();
 

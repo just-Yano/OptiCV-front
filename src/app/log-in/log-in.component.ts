@@ -36,9 +36,10 @@ export class LogInComponent {
       .then(response => {
         if (!response.ok) throw new Error('Identifiants invalides.');
         return response.json();
-      })
-      .then(data => {
-        this.auth.login(data.token);
+      }).then(data => {
+        // store the token in session storage
+        this.auth.login(data.token, formData.email); // TODO remove the email and keep the token only
+        // reset the form
         loginForm.reset();
 
         // Keep loading spinner a bit, then redirect
