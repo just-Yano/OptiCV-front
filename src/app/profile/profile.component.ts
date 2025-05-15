@@ -128,14 +128,13 @@ getLanguageLevelColor(level: number): string {
 
 
 getLanguageLevelHexColor(level: number): string {
-  switch(level) {
-    case 1: return '#EF4444';   // red-500
-    case 2: return '#F59E0B';   // yellow-500
-    case 3: return '#22C55E';   // green-500
-    case 4: return '#2563EB';   // blue-600
-    case 5: return '#7C3AED';   // purple-700
-    default: return '#9CA3AF';  // gray-400 fallback
-  }
+  if (level >= 5) return '#7C3AED';   // purple-700 (Native or higher)
+  if (level === 4) return '#2563EB';  // blue-600 (Fluent)
+  if (level === 3) return '#22C55E';  // green-500 (Advanced)
+  if (level === 2) return '#F59E0B';  // yellow-500 (Intermediate)
+  if (level === 1) return '#EF4444';  // red-500 (Basic)
+  return '#9CA3AF';                   // gray-400 fallback (Unknown)
 }
+
 
 }
