@@ -5,12 +5,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        muted: 'var(--color-muted)',
-        background: 'var(--color-background)',
-        accentGreen: 'var(--color-accent-green)',
-        accentOlive: 'var(--color-accent-olive)',
-        strongText: 'var(--color-strong-text)',
+        primary: '#A1B5D8',
+        muted: '#738290',
+        background: '#FFFCF7',
+        accentGreen: '#E4F0D0',
+        accentOlive: '#C2D8B9',
+        strongText: '#2C2F36',
       },
     },
   },

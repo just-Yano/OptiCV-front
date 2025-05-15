@@ -1,21 +1,73 @@
-<div *ngIf="score; else noScore">
-    <h3>Score Overview</h3>
+<div *ngIf="score; else noScore" class="space-y-8 px-6 md:px-16 py-10">
+  <h2 class="text-2xl font-bold text-strongText text-center">CV Score Analysis</h2>
 
-    <div class="score-container">
-        <div class="score-item" *ngFor="let field of scoreFields">
-            <div class="score">
-                <strong>{{ field.label }}:</strong>
-                <p>{{ score[field.scoreKey] }}</p>
+  <!-- Score Cards: stacked vertically -->
+  <div class="space-y-6">
+    <div
+      *ngFor="let field of scoreFields"
+      class="card bg-base-100 shadow border border-gray-200"
+    >
+      <div class="card-body space-y-3">
+        <!-- Header with tooltip next to title -->
+        <div class="flex justify-between items-start">
+          <div class="flex items-center space-x-2">
+            <h3 class="text-lg font-semibold text-strongText">
+              {{ field.label }}
+            </h3>
+            <div
+              class="tooltip tooltip-right tooltip-info"
+              [attr.data-tip]="field.tooltip"
+            >
+              <span class="text-gray-400 cursor-help text-sm">ⓘ</span>
             </div>
-            <div class="comment">
-                <strong>{{ field.label }} Comment:</strong>
-                <p>{{ score[field.commentKey] }}</p>
-            </div>
+          </div>
+
+          <!-- Score badge -->
+          <span
+            class="badge text-white px-3 py-1 rounded-full text-sm"
+            [ngClass]="getScoreColor(score[field.scoreKey])"
+          >
+            {{ score[field.scoreKey] }}/100
+          </span>
         </div>
-    </div>
 
+        <!-- Always-visible comment -->
+        <p class="text-sm text-gray-700">
+          {{ score[field.commentKey] }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final average score -->
+  <div class="pt-10 text-center">
+    <h3 class="text-xl font-bold text-strongText">Overall Score</h3>
+    <p
+      class="text-4xl font-extrabold mt-4 inline-block px-6 py-3 rounded-full text-white shadow"
+      [ngClass]="getScoreColor(finalScore)"
+    >
+      {{ finalScore }}/100
+    </p>
+  </div>
+
+  <!-- Call to Action Block -->
+  <div class="mt-12 animate-fade-in-up">
+    <div class="card bg-base-100 shadow-lg p-6 space-y-4 border border-gray-200 text-center">
+      <h3 class="text-xl font-bold text-strongText">
+        Ready to take your CV further?
+      </h3>
+      <p class="text-muted">
+        Build a polished CV or tailor it to a specific job opportunity.
+      </p>
+      <!-- CTA Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+        <button class="btn btn-primary btn-wide" (click)="goToCreation()">Create a CV</button>
+        <button class="btn btn-outline btn-wide" (click)="goToTailoring()">Tailor my CV</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #noScore>
-    <p>No score data available.</p>
+  <p class="text-muted text-center py-12">No score available yet.</p>
 </ng-template>
