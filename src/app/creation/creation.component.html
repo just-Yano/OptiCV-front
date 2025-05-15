@@ -2,27 +2,31 @@
     <app-header></app-header>
 
     <div *ngIf="!templateChosen" class="flex h-dvh pt-10 px-10 gap-8">
-            <app-template-selector (messageEvent)="receiveTemplate($event)" />
+        <app-template-selector (messageEvent)="receiveTemplate($event)" />
     </div>
 
     <!-- CV creation interface -->
-    <div class="flex h-dvh pt-10 px-10 gap-8" *ngIf="templateChosen">
-        <!-- Left: iframe preview -->
-        <div class="w-1/2">
-            <h2 class="text-2xl font-bold mb-6">Live Preview</h2>
-            <p class="text-sm text-gray-500 mb-4">
-                See how your CV looks in real-time. Changes on the right will be reflected here.
-            </p>
-            <iframe src="" class="w-full h-[60vh] border rounded-lg shadow-md"></iframe> <!-- TODO: Set the correct src -->
-        </div>
+    <div class="pt-10 px-10 pb-10" *ngIf="templateChosen">
+        <div class="flex gap-8 h-[calc(100vh-10rem)]">
+            <!-- Left: iframe preview -->
+            <div class="w-1/2 h-full flex flex-col">
+                <h2 class="text-2xl font-bold mb-4">Live Preview</h2>
+                <p class="text-sm text-gray-500 mb-4">
+                    See how your CV looks in real-time. Changes on the right will be reflected here.
+                </p>
+                <iframe src="assets/sample.pdf" class="w-full flex-1 border rounded-lg shadow-md"></iframe>
+            </div>
 
-        <!-- Right: add/edit section -->
-        <div class="w-1/2 overflow-y-auto max-h-[80vh] pr-2">
-            <h2 class="text-2xl font-bold mb-6">Edit Your Sections</h2>
-            <p class="text-sm text-gray-500 mb-4">
-                Add or customize sections like experience, education, and skills to match your career goals.
-            </p>
-            <app-add-section [cvTemplateId]="template.id"></app-add-section>
+            <!-- Right: add/edit section -->
+            <div class="w-1/2 h-full overflow-y-auto pr-2">
+                <h2 class="text-2xl font-bold mb-4">Edit Your Sections</h2>
+                <p class="text-sm text-gray-500 mb-4">
+                    Add or customize sections like experience, education, and skills to match your career goals.
+                </p>
+                <div class="w-full">
+                    <app-add-section class="w-full" [cvTemplateId]="template.id"></app-add-section>
+                </div>
+            </div>
         </div>
     </div>
 

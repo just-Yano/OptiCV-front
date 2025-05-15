@@ -1,176 +1,193 @@
 <!-- Contact Info -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" checked="checked" />
   <div class="collapse-title font-semibold">Contact Info</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add or update your contact details</p>
-    <input id="contactName" type="text" placeholder="Name" class="input input-bordered w-3/4" />
-    <input id="contactEmail" type="email" placeholder="Email" class="input input-bordered w-3/4" />
-    <input id="contactPhone" type="tel" placeholder="Phone" class="input input-bordered w-3/4" />
-    <input id="contactAddress" type="text" placeholder="Address" class="input input-bordered w-3/4" />
-    <input id="contactLinkedIn" type="url" placeholder="LinkedIn URL" class="input input-bordered w-3/4" />
-    <input id="contactGitHub" type="url" placeholder="GitHub URL" class="input input-bordered w-3/4" />
-    <input id="contactWebsite" type="url" placeholder="Website URL" class="input input-bordered w-3/4" />
+    <input id="contactName" type="text" placeholder="Name" class="input input-bordered w-full" />
+    <input id="contactEmail" type="email" placeholder="Email" class="input input-bordered w-full" />
+    <input id="contactPhone" type="tel" placeholder="Phone" class="input input-bordered w-full" />
+    <input id="contactAddress" type="text" placeholder="Address" class="input input-bordered w-full" />
+    <input id="contactLinkedIn" type="url" placeholder="LinkedIn URL" class="input input-bordered w-full" />
+    <input id="contactGitHub" type="url" placeholder="GitHub URL" class="input input-bordered w-full" />
+    <input id="contactWebsite" type="url" placeholder="Website URL" class="input input-bordered w-full" />
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Upload an image</label>
-      <input id="contactPhoto" type="file" accept="image/*" placeholder="Photo" class="file-input file-input-bordered w-3/4" />
+      <input id="contactPhoto" type="file" accept="image/*" placeholder="Photo"
+        class="file-input file-input-bordered w-full" />
     </div>
-    <textarea id="contactDescription" placeholder="Description" class="textarea textarea-bordered w-3/4"></textarea>
+    <textarea id="contactDescription" placeholder="Description" class="textarea textarea-bordered w-full"></textarea>
     <button class="btn btn-block" (click)="addContactInfo()">Add Section</button>
   </div>
 </div>
 
 <!-- Summary -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Summary</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a summary</p>
-    <textarea id="summaryText" placeholder="Summary" class="textarea textarea-bordered w-3/4" rows="4"></textarea>
+    <textarea id="summaryText" placeholder="Summary" class="textarea textarea-bordered w-full" rows="4"></textarea>
     <button class="btn btn-block" (click)="addSummary()">Add Section</button>
   </div>
 </div>
 
 <!-- Education -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Education</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add an education entry</p>
-    <textarea id="educationTitle" type="text" placeholder="Degree" class="textarea textarea-bordered w-3/4"></textarea>
-    <textarea id="educationSchool" type="text" placeholder="School" class="textarea textarea-bordered w-3/4"></textarea>
-    <textarea id="educationLocation" type="text" placeholder="Location" class="textarea textarea-bordered w-3/4"></textarea>
+    <textarea id="educationTitle" type="text" placeholder="Degree" class="textarea textarea-bordered w-full"></textarea>
+    <textarea id="educationSchool" type="text" placeholder="School"
+      class="textarea textarea-bordered w-full"></textarea>
+    <textarea id="educationLocation" type="text" placeholder="Location"
+      class="textarea textarea-bordered w-full"></textarea>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Start Date</label>
-      <input id="educationStartDate" type="date" class="input input-bordered w-3/4" />
+      <input id="educationStartDate" type="date" class="input input-bordered w-full" />
     </div>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">End Date</label>
-      <input id="educationEndDate" type="date" class="input input-bordered w-3/4" />
+      <input id="educationEndDate" type="date" class="input input-bordered w-full" />
     </div>
-    <textarea id="educationDescription" placeholder="Description" class="textarea textarea-bordered w-3/4" rows="4"></textarea>
+    <textarea id="educationDescription" placeholder="Description" class="textarea textarea-bordered w-full"
+      rows="4"></textarea>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Upload a logo</label>
-      <input id="educationLogo" type="file" accept="image/*" placeholder="Logo" class="file-input file-input-bordered w-3/4" />
+      <input id="educationLogo" type="file" accept="image/*" placeholder="Logo"
+        class="file-input file-input-bordered w-full" />
     </div>
     <button class="btn btn-block" (click)="addEducation()">Add Section</button>
   </div>
 </div>
 
 <!-- Experience -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Experience</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a work experience</p>
-    <textarea id="experienceTitle" type="text" placeholder="Job Title" class="textarea textarea-bordered w-3/4"></textarea>
-    <textarea id="experienceCompany" type="text" placeholder="Company" class="textarea textarea-bordered w-3/4"></textarea>
-    <textarea id="experienceLocation" type="text" placeholder="Location" class="textarea textarea-bordered w-3/4"></textarea>
+    <textarea id="experienceTitle" type="text" placeholder="Job Title"
+      class="textarea textarea-bordered w-full"></textarea>
+    <textarea id="experienceCompany" type="text" placeholder="Company"
+      class="textarea textarea-bordered w-full"></textarea>
+    <textarea id="experienceLocation" type="text" placeholder="Location"
+      class="textarea textarea-bordered w-full"></textarea>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Start Date</label>
-      <input id="experienceStartDate" type="date" class="input input-bordered w-3/4" />
+      <input id="experienceStartDate" type="date" class="input input-bordered w-full" />
     </div>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">End Date</label>
-      <input id="experienceEndDate" type="date" class="input input-bordered w-3/4" />
+      <input id="experienceEndDate" type="date" class="input input-bordered w-full" />
     </div>
-    <textarea id="experienceDescription" placeholder="Description" class="textarea textarea-bordered w-3/4" rows="4"></textarea>
+    <textarea id="experienceDescription" placeholder="Description" class="textarea textarea-bordered w-full"
+      rows="4"></textarea>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Upload a logo</label>
-      <input id="experienceLogo" type="file" accept="image/*" placeholder="Logo" class="file-input file-input-bordered w-3/4" />
+      <input id="experienceLogo" type="file" accept="image/*" placeholder="Logo"
+        class="file-input file-input-bordered w-full" />
     </div>
     <button class="btn btn-block" (click)="addExperience()">Add Section</button>
   </div>
 </div>
 
 <!-- Certifications -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Certification</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a new certification</p>
-    <textarea id="certificationName" type="text" placeholder="Certification Name" class="textarea textarea-bordered w-3/4"></textarea>
-    <textarea id="certificationInstitution" type="text" placeholder="Institution" class="textarea textarea-bordered w-3/4"></textarea>
+    <textarea id="certificationName" type="text" placeholder="Certification Name"
+      class="textarea textarea-bordered w-full"></textarea>
+    <textarea id="certificationInstitution" type="text" placeholder="Institution"
+      class="textarea textarea-bordered w-full"></textarea>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Date obtained</label>
-      <input id="certificationDateObtained" type="date" class="input input-bordered w-3/4" />
+      <input id="certificationDateObtained" type="date" class="input input-bordered w-full" />
     </div>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Expiration date</label>
-      <input id="certificationExpirationDate" type="date" class="input input-bordered w-3/4" />
+      <input id="certificationExpirationDate" type="date" class="input input-bordered w-full" />
     </div>
     <button class="btn btn-block" (click)="addCertification()">Add Section</button>
   </div>
 </div>
 
 <!-- Projects -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Projects</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a project</p>
-    <textarea id="projectTitle" type="text" placeholder="Title" class="textarea textarea-bordered w-3/4"></textarea>
-    <textarea id="projectDescription" placeholder="Description" class="textarea textarea-bordered w-3/4" rows="4"></textarea>
+    <textarea id="projectTitle" type="text" placeholder="Title" class="textarea textarea-bordered w-full"></textarea>
+    <textarea id="projectDescription" placeholder="Description" class="textarea textarea-bordered w-full"
+      rows="4"></textarea>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Start Date</label>
-      <input id="projectStartDate" type="date" class="input input-bordered w-3/4" />
+      <input id="projectStartDate" type="date" class="input input-bordered w-full" />
     </div>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">End Date</label>
-      <input id="projectEndDate" type="date" class="input input-bordered w-3/4" />
+      <input id="projectEndDate" type="date" class="input input-bordered w-full" />
     </div>
     <div class="flex flex-col">
       <label class="text-sm text-gray-500 mb-1">Upload a logo</label>
-      <input id="projectLogo" type="file" accept="image/*" placeholder="Logo" class="file-input file-input-bordered w-3/4" />
+      <input id="projectLogo" type="file" accept="image/*" placeholder="Logo"
+        class="file-input file-input-bordered w-full" />
     </div>
-    <input id="projectLink" type="url" placeholder="Project Link" class="input input-bordered w-3/4" />
+    <input id="projectLink" type="url" placeholder="Project Link" class="input input-bordered w-full" />
     <button class="btn btn-block" (click)="addProject()">Add Section</button>
   </div>
 </div>
 
 <!-- Hard Skills -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Hard Skills</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a hard skill</p>
-    <input id="hardSkillName" type="text" placeholder="Skill Name" class="input input-bordered w-3/4" />
-    <input id="hardSkillLevel" type="number" min="0" max="5" placeholder="Level (0-5)" class="input input-bordered w-3/4" />
+    <input id="hardSkillName" type="text" placeholder="Skill Name" class="input input-bordered w-full" />
+    <input id="hardSkillLevel" type="number" min="0" max="5" placeholder="Level (0-5)"
+      class="input input-bordered w-full" />
     <button class="btn btn-block" (click)="addHardSkill()">Add Section</button>
   </div>
 </div>
 
 <!-- Soft Skills -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Soft Skills</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a soft skill</p>
-    <input id="softSkillName" type="text" placeholder="Skill Name" class="input input-bordered w-3/4" />
-    <input id="softSkillLevel" type="number" min="0" max="5" placeholder="Level (0-5)" class="input input-bordered w-3/4" />
+    <input id="softSkillName" type="text" placeholder="Skill Name" class="input input-bordered w-full" />
+    <input id="softSkillLevel" type="number" min="0" max="5" placeholder="Level (0-5)"
+      class="input input-bordered w-full" />
     <button class="btn btn-block" (click)="addSoftSkill()">Add Section</button>
   </div>
 </div>
 
 <!-- Languages -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Languages</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add a language</p>
-    <input id="languageName" type="text" placeholder="Language Name" class="input input-bordered w-3/4" />
-    <input id="languageLevel" type="number" min="0" max="5" placeholder="Level (0-5)" class="input input-bordered w-3/4" />
+    <input id="languageName" type="text" placeholder="Language Name" class="input input-bordered w-full" />
+    <input id="languageLevel" type="number" min="0" max="5" placeholder="Level (0-5)"
+      class="input input-bordered w-full" />
     <button class="btn btn-block" (click)="addLanguage()">Add Section</button>
   </div>
 </div>
 
 <!-- Interests -->
-<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-3/4">
+<div class="collapse collapse-arrow bg-base-100 border border-base-300 w-full">
   <input type="radio" name="cv-accordion" />
   <div class="collapse-title font-semibold">Interests</div>
   <div class="collapse-content space-y-4">
     <p class="text-sm text-gray-500">Fill in below to add an interest</p>
-    <input id="interestName" type="text" placeholder="Interest" class="input input-bordered w-3/4" />
+    <input id="interestName" type="text" placeholder="Interest" class="input input-bordered w-full" />
     <button class="btn btn-block" (click)="addInterest()">Add Section</button>
   </div>
 </div>
