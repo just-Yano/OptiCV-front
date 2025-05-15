@@ -1,12 +1,13 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Template } from '../../interfaces/template';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'; 
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { LoadingModalComponent } from '../shared/loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-template-selector',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoadingModalComponent],
   templateUrl: './template-selector.component.html',
   styleUrls: ['./template-selector.component.css']
 })
@@ -14,9 +15,11 @@ export class TemplateSelectorComponent {
   templates: Template[] = [];
   pageSize = 8;
   currentPage = 1;
+  loading: boolean = false;
 
   @Output() messageEvent = new EventEmitter<Template>();
 
+  constructor(private sanitizer: DomSanitizer) {}
 
   get totalPages(): number {
     return Math.ceil(this.templates.length / this.pageSize);
@@ -27,31 +30,27 @@ export class TemplateSelectorComponent {
     return this.templates.slice(start, start + this.pageSize);
   }
 
-  sendTemplate(template: Template) {
-    this.messageEvent.emit(template);
-  }
-
-  constructor(private sanitizer: DomSanitizer) {}
-
-
   ngOnInit() {
-    // getting the templates from the server
+    this.loading = true;
+
     fetch('http://localhost:8080/api/cvtemplate/getAllTemplates')
       .then(response => response.json())
       .then(data => {
-        // Assuming the data is an array of templates
         this.templates = data;
-        console.log(data);
         this.templates.forEach(template => {
-          // Sanitize the thumbnail SVG string
           template.safeThumbnail = this.sanitizer.bypassSecurityTrustHtml(template.thumbnail);
         });
-      }
-      )
+      })
       .catch(error => {
         console.error('Error fetching templates:', error);
-      }
-      );
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  sendTemplate(template: Template) {
+    this.messageEvent.emit(template);
   }
 
   onPageChange(page: number) {
