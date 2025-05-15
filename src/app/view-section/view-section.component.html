@@ -237,16 +237,16 @@
     </div>
   </div>
 
-  <!-- Interests -->
+   <!-- Interests -->
   <div class="collapse collapse-arrow bg-base-100 border border-base-300">
     <input type="radio" name="cv-accordion" />
     <div class="collapse-title font-semibold">Interests</div>
     <div class="collapse-content p-0">
       <table class="w-full text-sm text-gray-600">
         <tbody>
-          <ng-container *ngFor="let it of interests; let last = last">
-            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyInterestModal(it)">
-              <td class="py-3 px-4">{{ it.interest }}</td>
+          <ng-container *ngFor="let interest of interests; let last = last">
+            <tr class="hover:bg-base-200 cursor-pointer" (click)="openModifyInterestModal(interest)">
+              <td class="py-3 px-4">{{ interest }}</td> <!-- Directly print the interest string -->
             </tr>
             <tr *ngIf="!last">
               <td class="h-0.5 bg-gray-200"></td>

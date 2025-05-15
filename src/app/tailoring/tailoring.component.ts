@@ -30,6 +30,7 @@ export class TailoringComponent {
   errorMessage: string | null = null;
   selectedTemplateId: number | null = null;
   userId = -1;
+  tailoringComment: string | null = null;
 
   constructor() {
     this.userData = {
@@ -50,13 +51,12 @@ export class TailoringComponent {
   }
 
   fetchProfile(email: string) {
-  fetch('http://localhost:8080/api/user/getProfile', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  })
+  fetch(`http://localhost:8080/api/user/getProfile?mail=${encodeURIComponent(email)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -130,6 +130,8 @@ export class TailoringComponent {
       jobOffer: jobOffer
     };
 
+    console.log('Payload:', payload);
+
     fetch('http://localhost:8080/api/tailor/tailorCV', {
       method: 'POST',
       headers: {
@@ -162,6 +164,7 @@ export class TailoringComponent {
         // if you need contactInfo downstream, you can pass it as well
         contactInfo: data.tailoredCV.contactInfo || {}
       };
+      this.tailoringComment = data.tailoringComment;
 
       })
       .catch(error => {
