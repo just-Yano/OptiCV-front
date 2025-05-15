@@ -4,73 +4,81 @@ import { CommonModule } from '@angular/common';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
+import { LoadingModalComponent } from '../shared/loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule, LoadingModalComponent],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   errorMessage: string = '';
-  successMessage: string = '';  
-  form = {
-      username: '',
-      email: '',
-      password: '', 
-      confirmPassword: ''
-    };
+  successMessage: string = '';
+  isLoading: boolean = false;
+  shakeForm: boolean = false;
 
-  constructor(private navigationService: NavigationService, private router : Router, private aut : AuthService) {}
+  form = {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  };
+
+  constructor(
+    private navigationService: NavigationService,
+    private router: Router,
+    private aut: AuthService
+  ) {}
 
   onSubmit(registerForm: NgForm) {
-  // double check if the form is valid
-  if (registerForm.valid) {
-    // get the form data
-    const { username, email, password } = registerForm.value;
-    const formData = {
-      username: username,
-      email: email,
-      password: password
-    };
+    if (!registerForm.valid || this.form.password !== this.form.confirmPassword) {
+      this.shakeForm = true;
+      setTimeout(() => (this.shakeForm = false), 400);
+      return;
+    }
 
-    // sending the form data to the server
+    const { username, email, password } = registerForm.value;
+    const formData = { username, email, password };
+
+    this.isLoading = true;
+
     fetch('http://localhost:8080/api/auth/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
     })
       .then(response => {
         if (!response.ok) {
-          // Only read the response body once if there's an error
           return response.json().then(data => {
             throw new Error(data.responseMessage || 'Registration failed');
           });
         }
-        return response.json(); // Read the body once for a successful response
+        return response.json();
       })
       .then(data => {
-        // Handle the success case
         this.aut.login(data.token);
-        this.successMessage = 'Welcome to OptiCV!';
+        this.successMessage = '🎉 Votre compte a été créé avec succès !';
         registerForm.reset();
+
         setTimeout(() => {
           this.successMessage = '';
+          this.isLoading = false;
           this.router.navigate(['/home']);
         }, 3000);
       })
       .catch(error => {
-        // Handle the error
+        this.isLoading = false;
         this.errorMessage = error.message;
+        this.shakeForm = true;
+
         setTimeout(() => {
           this.errorMessage = '';
+          this.shakeForm = false;
         }, 3000);
       });
   }
-}
-
 
   navigateToLogin() {
     this.navigationService.navigateToLogin();

@@ -1,6 +1,10 @@
 <div class="min-h-screen flex items-center justify-center bg-background px-4">
-    <form id="register-form" class="relative bg-base-100 p-8 rounded-box shadow-md w-full max-w-md space-y-6"
-        (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+    <form
+    id="register-form"
+    [ngClass]="{ 'shake': shakeForm }"
+    class="relative bg-base-100 p-8 rounded-box shadow-md w-full max-w-md space-y-6"
+    (ngSubmit)="onSubmit(registerForm)"
+    #registerForm="ngForm">
         <!-- Back Arrow Button -->
         <button type="button" (click)="navigateToLogin()" class="absolute top-4 left-4 text-muted hover:text-primary"
             aria-label="Back to Home">
@@ -76,9 +80,20 @@
             [disabled]="registerForm.invalid || form.password !== form.confirmPassword">
             Register
         </button>
+        <p *ngIf="successMessage" class="bg-green-100 text-green-700 text-sm text-center py-2 px-4 rounded shadow">
+            {{ successMessage }}
+          </p>
+          
+          <p *ngIf="errorMessage" class="bg-red-100 text-red-700 text-sm text-center py-2 px-4 rounded shadow">
+            {{ errorMessage }}
+          </p>
+          
 
-        <!-- Messages -->
-        <p *ngIf="errorMessage" class="text-red-500 text-sm text-center mt-2">{{ errorMessage }}</p>
-        <p *ngIf="successMessage" class="text-green-600 text-sm text-center mt-2">{{ successMessage }}</p>
+        
     </form>
+    <app-loading-modal
+  *ngIf="isLoading"
+  message="Création de votre compte... Veuillez patienter.">
+</app-loading-modal>
+
 </div>

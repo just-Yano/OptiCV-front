@@ -1,63 +1,108 @@
 <div class="min-h-screen flex items-center justify-center bg-background px-4">
-    <form id="login-form" class="relative bg-base-100 p-8 rounded-box shadow-md w-full max-w-md space-y-6"
-        (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
-        <!-- Back Arrow Button -->
-        <button type="button" (click)="navigateToHome()" class="absolute top-4 left-4 text-muted hover:text-primary"
-            aria-label="Back to Home">
-            <!-- Heroicon: Arrow Left -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-        </button>
-
-        <!-- User Icon -->
-        <div class="flex justify-center">
-            <div class="bg-accentGreen rounded-full p-3">
-                <!-- Heroicon: User Circle -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-strongText" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M5.121 17.804A9.968 9.968 0 0112 15c2.21 0 4.25.722 5.879 1.938M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
+    <form
+      id="login-form"
+      [ngClass]="{ 'shake': shakeForm }"
+      class="relative bg-base-100 p-8 rounded-box shadow-md w-full max-w-md space-y-6"
+      (ngSubmit)="onSubmit(loginForm)"
+      #loginForm="ngForm"
+    >
+      <!-- Back Arrow Button -->
+      <button
+        type="button"
+        (click)="navigateToHome()"
+        class="absolute top-4 left-4 text-muted hover:text-primary"
+        aria-label="Back to Home"
+      >
+        <!-- Heroicon: Arrow Left -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+  
+      <!-- User Icon -->
+      <div class="flex justify-center">
+        <div class="bg-accentGreen rounded-full p-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-10 w-10 text-strongText"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M5.121 17.804A9.968 9.968 0 0112 15c2.21 0 4.25.722 5.879 1.938M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
         </div>
-
-        <!-- Title -->
-        <h2 class="text-2xl font-bold text-center text-strongText">Log In</h2>
-
-        <!-- Email Input -->
-        <div>
-            <label for="email" class="block mb-1 text-muted">Email address</label>
-            <input type="email" id="email" name="email" class="input input-bordered w-full" ngModel required email />
-        </div>
-
-        <!-- Password Input -->
-        <div>
-            <label for="password" class="block mb-1 text-muted">Password</label>
-            <input type="password" id="password" name="password" class="input input-bordered w-full" ngModel required />
-        </div>
-
-        <!-- Submit Button -->
-        <button class="btn w-full bg-primary text-white hover:bg-accentOlive" type="submit"
-            [disabled]="!loginForm.valid">
-            Log In
-        </button>
-
-        <!-- Registration Link -->
-        <p class="text-center text-sm">
-            Don't have an account?
-            <a class="link text-primary hover:text-accentOlive" (click)="navigateToRegistration()">Register now</a>
-        </p>
-
-        <!-- Messages -->
-        <p *ngIf="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
-        <p *ngIf="successMessage" class="text-green-600 text-sm text-center">{{ successMessage }}</p>
+      </div>
+  
+      <!-- Title -->
+      <h2 class="text-2xl font-bold text-center text-strongText">Log In</h2>
+  
+      <!-- Email Input -->
+      <div>
+        <label for="email" class="block mb-1 text-muted">Email address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="input input-bordered w-full"
+          ngModel
+          required
+          email
+        />
+      </div>
+  
+      <!-- Password Input -->
+      <div>
+        <label for="password" class="block mb-1 text-muted">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="input input-bordered w-full"
+          ngModel
+          required
+        />
+      </div>
+  
+      <!-- Submit Button -->
+      <button
+        class="btn w-full bg-primary text-white hover:bg-accentOlive"
+        type="submit"
+        [disabled]="!loginForm.valid"
+      >
+        Log In
+      </button>
+  
+      <!-- Registration Link -->
+      <p class="text-center text-sm">
+        Don't have an account?
+        <a class="link text-primary hover:text-accentOlive" (click)="navigateToRegistration()"
+          >Register now</a
+        >
+      </p>
+  
+      <!-- Error Message -->
+      <p *ngIf="errorMessage" class="text-red-500 text-sm text-center">
+        {{ errorMessage }}
+      </p>
     </form>
-</div>
-
-<div *ngIf="isLoading">
-    <span class="loading loading-dots loading-xl"></span>
-</div>
-
-<!--TODO add forgot password-->
+  </div>
+  
+  <!-- Reusable loading modal -->
+  <app-loading-modal
+    *ngIf="isLoading"
+    message="Connexion en cours... Veuillez patienter.">
+  </app-loading-modal>
+  

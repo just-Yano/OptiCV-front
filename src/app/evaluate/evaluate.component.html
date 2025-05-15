@@ -1,15 +1,30 @@
 <div *ngIf="isLoggedIn">
-    <app-header></app-header>
+  <app-header></app-header>
 
-    <fieldset class="fieldset">
-        <legend class="fieldset-legend">Pick a file</legend>
-        <input type="file" #cvInput class="file-input" accept="application/pdf" />
-        <label class="label">Max size 2MB</label>
-    </fieldset>
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Pick a file</legend>
+    <input type="file" #cvInput class="file-input" accept="application/pdf" />
+    <label class="label">Max size 2MB</label>
+  </fieldset>
 
-    <button class="btn" (click)="evaluateCV(cvInput)">Evaluer mon CV</button>
+  <button class="btn btn-primary mt-4" (click)="evaluateCV(cvInput)">
+    Evaluer mon CV
+  </button>
 
-    <app-score-section [score]="score"></app-score-section>
+  <!-- Use shared loading component -->
+  <app-loading-modal
+    *ngIf="loading"
+    message="Analyse de votre CV en cours... Cela ne prendra que quelques secondes.">
+  </app-loading-modal>
+
+  <!-- Score section -->
+  <app-score-section
+    *ngIf="!loading && score"
+    [score]="score">
+  </app-score-section>
 </div>
 
-<div *ngIf="!isLoggedIn">You should be logged in to evaluate a CV</div>
+<!-- Message if not logged in -->
+<div *ngIf="!isLoggedIn" class="text-center text-red-500 mt-10">
+  You should be logged in to evaluate a CV
+</div>

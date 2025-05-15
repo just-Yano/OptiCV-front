@@ -5,17 +5,20 @@ import { ScoreSectionComponent } from '../score-section/score-section.component'
 import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LoadingModalComponent } from '../shared/loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-evaluate',
-  imports: [HeaderComponent, ScoreSectionComponent, CommonModule],
+  standalone: true,
+  imports: [HeaderComponent, ScoreSectionComponent, CommonModule, LoadingModalComponent],
   templateUrl: './evaluate.component.html',
   styleUrl: './evaluate.component.css'
 })
 export class EvaluateComponent {
-  public score : ScoreCV | null = null; 
+  public score: ScoreCV | null = null;
   public isLoggedIn: boolean = false;
-  
+  public loading: boolean = false;
+
   constructor(private authService: AuthService, private router: Router) {
     this.isLoggedIn = this.authService.isLoggedIn();
   }
@@ -23,11 +26,11 @@ export class EvaluateComponent {
   ngOnInit() {
     if (!this.isLoggedIn) {
       setTimeout(() => {
-      this.router.navigate(['/login']);}
-      , 5000);
+        this.router.navigate(['/login']);
+      }, 5000);
     }
   }
-  
+
   evaluateCV(fileInput: HTMLInputElement) {
     const file = fileInput.files?.[0];
 
@@ -48,7 +51,10 @@ export class EvaluateComponent {
 
     const formData = new FormData();
     formData.append('file', file);
-    
+
+    this.loading = true;
+    this.score = null;
+
     fetch('http://localhost:8080/api/cv-score/evaluate-pdf', {
       method: 'POST',
       body: formData,
@@ -64,7 +70,9 @@ export class EvaluateComponent {
       })
       .catch(error => {
         console.error('Error evaluating CV:', error);
+      })
+      .finally(() => {
+        this.loading = false;
       });
   }
-
 }
