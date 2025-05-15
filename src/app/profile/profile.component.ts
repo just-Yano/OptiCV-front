@@ -4,15 +4,17 @@ import { AuthService } from '../services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GetProfilResponse } from '../../interfaces/GetProfilResponse';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, HeaderComponent],
+  imports: [CommonModule, HeaderComponent, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+  public editorMode: boolean = false;
   public isLoggedIn: boolean = false;
   public errorMessage: string = '';
   public profile: GetProfilResponse  = {
@@ -140,5 +142,15 @@ getLanguageLevelHexColor(level: number): string {
   return '#9CA3AF';                   // gray-400 fallback (Unknown)
 }
 
+editProfile() {
+  this.editorMode = !this.editorMode; 
+}
+
+saveChanges() {
+  this.editProfile(); 
+} 
+cancelChanges() {
+  this.editProfile();
+}
 
 }

@@ -3,7 +3,36 @@
         <app-header></app-header>
         <div class="max-w-4xl mx-auto p-6 bg-background text-strongText rounded-lg shadow-md space-y-8">
             <h1 class="text-3xl font-bold text-primary border-b border-muted pb-2">Profile Details</h1>
+            <div class="flex items-center justify-between p-4 border border-muted bg-accentOlive rounded-lg shadow-sm">
+                <p class="text-sm text-strongText">
+                    Noticed a change in your personal information? Keep your profile up to date.
+                </p>
+                <!-- Button Wrapper -->
+                <div class="flex gap-4 items-center">
+                    <!-- Update Button -->
+                    <button *ngIf="!editorMode"
+                        class="bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors"
+                        (click)="editProfile()">
+                        Update Info
+                    </button>
 
+                    <!-- Save / Cancel Buttons -->
+                    <ng-container *ngIf="editorMode">
+                        <button
+                            class="bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+                            (click)="saveChanges()">
+                            Save
+                        </button>
+                        <button
+                            class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+                            (click)="cancelChanges()">
+                            Cancel changes
+                        </button>
+                    </ng-container>
+                </div>
+
+
+            </div>
             <section class="space-y-2">
                 <h2 class="text-2xl font-semibold text-primary">Contact Information</h2>
                 <img *ngIf="profile.contactInfo.photo" [src]="profile.contactInfo.photo" alt="Profile Photo"
@@ -12,7 +41,9 @@
                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4' /%3E%3Cpath d='M4 20c0-4 8-4 8-4s8 0 8 4' /%3E%3C/svg%3E"
                     alt="Default User Icon" class="w-32 h-32 rounded-full border border-muted" />
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                    <p><strong>Name:</strong> {{ profile.contactInfo.name }}</p>
+                    <span *ngIf="!editorMode">{{ profile.contactInfo.name }}</span>
+                    <input *ngIf="editorMode" [(ngModel)]="profile.contactInfo.name"
+                        placeholder="{{ profile.contactInfo.name }}" class="input" />
                     <p><strong>Email:</strong> {{ profile.contactInfo.email }}</p>
                     <p><strong>Phone:</strong> {{ profile.contactInfo.phone }}</p>
                     <p><strong>Address:</strong> {{ profile.contactInfo.address }}</p>
@@ -179,15 +210,7 @@
                     </li>
                 </ul>
             </section>
-            <div class="flex items-center justify-between p-4 border border-muted bg-accentOlive rounded-lg shadow-sm">
-                <p class="text-sm text-strongText">
-                    Noticed a change in your personal information? Keep your profile up to date.
-                </p>
-                <button
-                    class="bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors">
-                    Update Info
-                </button>
-            </div>
+
         </div>
         <div *ngIf="errorMessage">{{ errorMessage }}</div>
     </div>
