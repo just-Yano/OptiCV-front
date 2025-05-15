@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GetProfilResponse } from '../../interfaces/GetProfilResponse';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from '../footer/footer.component';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, HeaderComponent, FormsModule],
+  imports: [CommonModule, HeaderComponent, FormsModule, FooterComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
