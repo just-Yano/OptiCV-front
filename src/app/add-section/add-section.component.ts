@@ -122,19 +122,24 @@ export class AddSectionComponent {
     const skillName = (document.getElementById('hardSkillName') as HTMLInputElement).value;
     const skillLevel = (document.getElementById('hardSkillLevel') as HTMLInputElement).value;
 
-    const params = new URLSearchParams({
-    hardSkillName: skillName,
-    level: skillLevel
-    }); 
+    const requestBody = {
+      hardSkillName: skillName,
+      level: skillLevel,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/hard-skills/add?${params.toString()}`, {
-        method: 'POST'
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Skill added:', data);
-      })
-      .catch(error => {
+    fetch('http://localhost:8080/api/hard-skills/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Skill added:', data);
+    })
+    .catch(error => {
         console.error('Error:', error);
       });
 
@@ -164,8 +169,7 @@ export class AddSectionComponent {
     const gitHub = (document.getElementById('contactGitHub') as HTMLInputElement).value;
     const website = (document.getElementById('contactWebsite') as HTMLInputElement).value;
     const description = (document.getElementById('contactDescription') as HTMLTextAreaElement).value;
-
-    const params = new URLSearchParams({
+    const requestBody = {
       name: name,
       email: email,
       phone: phone,
@@ -173,11 +177,16 @@ export class AddSectionComponent {
       linkedIn: linkedIn,
       github: gitHub,
       website: website,
-      description: description
-    });
+      description: description,
+      senderEmail: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/contactInfo/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/contactInfo/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -210,12 +219,17 @@ export class AddSectionComponent {
   addSummary() {
     const summary = (document.getElementById('summaryText') as HTMLTextAreaElement).value;
 
-    const params = new URLSearchParams({
-      summary: summary
-    });
+    const requestBody = {
+      summary: summary,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/summary/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/summary/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -241,18 +255,23 @@ export class AddSectionComponent {
     const logo = (document.getElementById('educationLogo') as HTMLInputElement).value;
     const location = (document.getElementById('educationLocation') as HTMLInputElement).value;
     
-    const params = new URLSearchParams({
+    const requestBody = {
       degree: title,
       school: school,
       startDate: startDate,
       endDate: endDate,
       location: location,
       description: description,
-      logo: logo
-    });
+      logo: logo,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/education/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/education/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -342,15 +361,20 @@ export class AddSectionComponent {
     const dateObtained = (document.getElementById('certificationDateObtained') as HTMLInputElement).value;
     const expirationDate = (document.getElementById('certificationExpirationDate') as HTMLInputElement).value;
 
-    const params = new URLSearchParams({
+    const requestBody = {
       name: name,
       institution: institution,
       dateObtained: dateObtained,
-      expirationDate: expirationDate
-    });
+      expirationDate: expirationDate,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/certification/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/certification/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -381,16 +405,21 @@ export class AddSectionComponent {
     const startDate = (document.getElementById('projectStartDate') as HTMLInputElement).value;
     const endDate = (document.getElementById('projectEndDate') as HTMLInputElement).value;
 
-    const params = new URLSearchParams({
+    const requestBody = {
       title: title,
       description: description,
       link: link,
       startDate: startDate,
-      endDate: endDate
-    });
+      endDate: endDate,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/project/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/project/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -420,13 +449,18 @@ export class AddSectionComponent {
     const skillName = (document.getElementById('softSkillName') as HTMLInputElement).value;
     const skillLevel = (document.getElementById('softSkillLevel') as HTMLInputElement).value;
 
-    const params = new URLSearchParams({
+    const requestBody = {
       name: skillName,
-      level: skillLevel
-    });
+      level: skillLevel,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/soft-skills/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/soft-skills/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -453,13 +487,18 @@ export class AddSectionComponent {
     const languageName = (document.getElementById('languageName') as HTMLInputElement).value;
     const languageLevel = (document.getElementById('languageLevel') as HTMLInputElement).value;
 
-    const params = new URLSearchParams({
+    const requestBody = {
       name: languageName,
-      level: languageLevel
-    });
+      level: languageLevel,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/language/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/language/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
@@ -484,12 +523,17 @@ export class AddSectionComponent {
   addInterest() {
     const interestName = (document.getElementById('interestName') as HTMLInputElement).value;
 
-    const params = new URLSearchParams({
-      interest: interestName
-    });
+    const requestBody = {
+      interest: interestName,
+      email: "daniel@opti.com"
+    };
 
-    fetch(`http://localhost:8080/api/interest/add?${params.toString()}`, {
-      method: 'POST'
+    fetch('http://localhost:8080/api/interest/add', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
     })
     .then(response => response.json())
     .then(data => {
