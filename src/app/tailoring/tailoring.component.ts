@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewSectionComponent } from '../view-section/view-section.component';
 import { TailoringResultComponent } from '../tailoring-result/tailoring-result.component';
@@ -71,21 +71,6 @@ export class TailoringComponent implements OnInit {
     }
   }
 
-  updateIframeSrc(url: string): void {
-  if (this.tailoringResultComponent && this.tailoringResultComponent.iframe) {
-    if (this.selectedTemplateId === 1) {
-      this.tailoringResultComponent.iframe.nativeElement.src = url; // Use the provided URL if template ID is 1
-      console.log('Iframe src updated to:', url);
-    } else {
-      const publicSrc = `/jack.pdf`; // Path to the public folder
-      this.tailoringResultComponent.iframe.nativeElement.src = publicSrc; // Use the public folder file
-      console.log('Iframe src updated to public folder file:', publicSrc);
-    }
-  } else {
-    console.error('Iframe element or TailoringResultComponent is not initialized.');
-  }
-}
-
   fetchProfile(email: string) {
     fetch(`http://localhost:8080/api/user/getProfile?mail=${encodeURIComponent(email)}`, {
       method: 'GET',
@@ -112,25 +97,9 @@ export class TailoringComponent implements OnInit {
       });
   }
 
-   ngAfterViewInit(): void {
-    console.log('TailoringResultComponent initialized:', this.tailoringResultComponent);
-  }
-
   onTemplateSelected(template: Template) {
     if (!this.isTailoringComplete) {
       console.error('Tailoring is not complete. Cannot select template.');
-      return;
-    }
-
-    if (!this.tailoringResultComponent) {
-      console.error('TailoringResultComponent is not initialized yet.');
-      return;
-    }
-
-    if (template.id !== 1) {
-      console.log('Template ID is not 1. Skipping fetch call.');
-      const publicSrc = `/jack.pdf`; // Path to public folder
-      this.tailoringResultComponent.updateIframeSrc(publicSrc);
       return;
     }
 
@@ -167,7 +136,6 @@ export class TailoringComponent implements OnInit {
         console.error('Error:', error);
       });
   }
-
 
   startTailoring(): void {
     console.log('Start tailoring button clicked');
